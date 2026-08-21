@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* Palette sampled from the VietHope logo: cyan #14BDD0, leaf #9DC73C, deep teal #008081 */
+  --color-ink: #06272c;
+  --color-ink-2: #0c3a41;
+  --color-ink-3: #11525b;
+  --color-flow: #14bdd0;
+  --color-flow-dim: #0e97a8;
+  --color-deep: #008081;
+  --color-leaf: #9dc73c;
+  --color-leaf-dim: #7ea62c;
+  --color-silt: #dbe8ea;
+  --color-silt-2: #eef4f5;
+  --color-paper: #f7fafa;
+  --color-amber: #e0a02f;
+
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-card: 18px;
+}
+
+:root {
+  color-scheme: light;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* `clip`, not `hidden`: it prevents sideways rubber-banding without
+     creating a scroll container, so the sticky headers keep working. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  overflow-x: clip;
+}
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { text-wrap: pretty; }
+
+/* Visible keyboard focus everywhere, never on mouse click */
+:focus-visible {
+  outline: 2px solid var(--color-flow);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+img { outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; }
+
+/* Slider: the weight panel's primary control */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: grab;
+}
+input[type="range"]:active { cursor: grabbing; }
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--track, var(--color-silt));
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  margin-top: -7px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--thumb, var(--color-flow));
+  box-shadow: 0 1px 2px rgb(6 39 44 / 0.18), 0 4px 10px rgb(6 39 44 / 0.12);
+  transition-property: transform, box-shadow;
+  transition-duration: 140ms;
+  transition-timing-function: var(--ease-out);
+}
+input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
+input[type="range"]:active::-webkit-slider-thumb { transform: scale(0.96); }
+input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: var(--track, var(--color-silt)); }
+input[type="range"]::-moz-range-thumb {
+  height: 18px; width: 18px; border-radius: 999px; background: #fff;
+  border: 2px solid var(--thumb, var(--color-flow));
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
