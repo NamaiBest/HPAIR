@@ -4,7 +4,6 @@ import { LayoutGrid, Search, SlidersHorizontal, X } from "lucide-react";
 import { Brand } from "./Onboarding";
 import { CourseCard } from "@/components/CourseCard";
 import { WeightPanel } from "@/components/WeightPanel";
-import { FactorLegend } from "@/components/ScoreMark";
 import { Button, Chip, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
 import { PLATFORMS } from "@/data/platforms";
@@ -15,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 export function Catalogue({
   profile, weights, setWeights, progress, completed,
-  onOpenCourse, onExplain, onEditProfile,
+  onOpenCourse, onExplain, onEditProfile, onHome,
 }: {
   profile: Profile;
   weights: Weights;
@@ -25,6 +24,7 @@ export function Catalogue({
   onOpenCourse: (id: string) => void;
   onExplain: (id: string) => void;
   onEditProfile: () => void;
+  onHome?: () => void;
 }) {
   const [query, setQuery] = useState("");
   const [platform, setPlatform] = useState<string | null>(null);
@@ -58,7 +58,7 @@ export function Catalogue({
       {/* ── Header ─────────────────────────────────────────────── */}
       <header className="sticky top-0 z-30 border-b border-black/[0.07] bg-paper/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1400px] items-center gap-4 px-5 py-3 lg:px-8">
-          <Brand />
+          <Brand onHome={onHome} />
           <div className="relative ml-auto hidden max-w-md flex-1 sm:block">
             <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 opacity-40" />
             <input
@@ -121,7 +121,6 @@ export function Catalogue({
         <main className="min-w-0">
           {/* Filter row */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[12px] font-semibold opacity-45">Filter</span>
             <select
               value={language ?? ""}
               onChange={(e) => setLanguage(e.target.value || null)}
@@ -162,8 +161,6 @@ export function Catalogue({
               {visible.length} of {ranked.length}
             </span>
           </div>
-
-          <FactorLegend className="mt-3.5" />
 
           {/* The list. layout animation is what makes re-ranking legible. */}
           <motion.div layout className="mt-4 flex flex-col gap-3">

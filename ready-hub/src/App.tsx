@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
+import { Home } from "@/screens/Home";
 import { Onboarding } from "@/screens/Onboarding";
 import { Catalogue } from "@/screens/Catalogue";
 import { ScoreDetail } from "@/screens/ScoreDetail";
@@ -15,6 +16,8 @@ import {
 } from "@/data/profile";
 
 type View =
+  | { name: "home" }
+  | { name: "onboarding" }
   | { name: "catalogue" }
   | { name: "score"; courseId: string }
   | { name: "course"; courseId: string }
@@ -22,7 +25,7 @@ type View =
 
 export default function App() {
   const { state, patch, update } = usePersisted();
-  const [view, setView] = useState<View>({ name: "catalogue" });
+  const [view, setView] = useState<View>({ name: "home" });
   const [editing, setEditing] = useState(false);
 
   const profile = (state.profile as Profile) ?? DEFAULT_PROFILE;
@@ -30,17 +33,6 @@ export default function App() {
 
   const ranked = useMemo(() => rankCourses(profile, weights), [profile, weights]);
   const byId = (id: string) => ranked.find((c) => c.id === id)!;
-
-  if (!state.onboarded) {
-    return (
-      <Onboarding
-        onDone={(p) => {
-          patch({ profile: p, weights: DEFAULT_WEIGHTS, onboarded: true });
-          setView({ name: "catalogue" });
-        }}
-      />
-    );
-  }
 
   const setWeights = (w: Weights) => patch({ weights: w });
 
@@ -76,6 +68,24 @@ export default function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18 }}
         >
+          {view.name === "home" && (
+            <Home
+              onboarded={state.onboarded}
+              onGetStarted={() => setView({ name: "onboarding" })}
+              onContinue={() => setView({ name: "catalogue" })}
+            />
+          )}
+
+          {view.name === "onboarding" && (
+            <Onboarding
+              onDone={(p) => {
+                patch({ profile: p, weights: DEFAULT_WEIGHTS, onboarded: true });
+                setView({ name: "catalogue" });
+              }}
+              onHome={() => setView({ name: "home" })}
+            />
+          )}
+
           {view.name === "catalogue" && (
             <Catalogue
               profile={profile}
@@ -86,6 +96,7 @@ export default function App() {
               onOpenCourse={(id) => setView({ name: "course", courseId: id })}
               onExplain={(id) => setView({ name: "score", courseId: id })}
               onEditProfile={() => setEditing(true)}
+              onHome={() => setView({ name: "home" })}
             />
           )}
 

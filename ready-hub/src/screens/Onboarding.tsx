@@ -12,7 +12,7 @@ import { asset, cn } from "@/lib/utils";
 
 const STEPS = ["Where you study", "What you study", "Where you are going"];
 
-export function Onboarding({ onDone }: { onDone: (p: Profile) => void }) {
+export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; onHome?: () => void }) {
   const [step, setStep] = useState(0);
   const [p, setP] = useState<Profile>({
     country: "", institution: "", field: "Finance", level: "Beginner",
@@ -43,7 +43,7 @@ export function Onboarding({ onDone }: { onDone: (p: Profile) => void }) {
           style={{ background: "linear-gradient(160deg,rgba(6,39,44,.72),rgba(0,128,129,.62) 50%,rgba(6,39,44,.92))" }}
         />
         <div className="relative">
-          <Brand light />
+          <Brand light onHome={onHome} />
         </div>
         <div className="relative max-w-md">
           <h1 className="text-[44px] leading-[1.03] font-extrabold tracking-[-0.02em]">
@@ -68,7 +68,7 @@ export function Onboarding({ onDone }: { onDone: (p: Profile) => void }) {
       {/* Right: the form */}
       <main className="flex flex-col justify-center px-6 py-10 sm:px-12 lg:px-14">
         <div className="mx-auto w-full max-w-lg">
-          <div className="lg:hidden"><Brand /></div>
+          <div className="lg:hidden"><Brand onHome={onHome} /></div>
 
           <div className="mt-8 flex items-center gap-2 lg:mt-0">
             {STEPS.map((label, i) => (
@@ -256,9 +256,16 @@ function StepHead({ title, sub }: { title: string; sub: string }) {
   );
 }
 
-export function Brand({ light = false }: { light?: boolean }) {
+export function Brand({ light = false, onHome }: { light?: boolean; onHome?: () => void }) {
+  const Tag = onHome ? "button" : "div";
   return (
-    <div className="flex items-center gap-3">
+    <Tag
+      onClick={onHome}
+      className={cn(
+        "flex items-center gap-3",
+        onHome && "-m-1 rounded-full p-1 transition-opacity duration-150 hover:opacity-70 active:scale-[0.98]",
+      )}
+    >
       <img
         src={asset("/viethope/viethope-logo.png")}
         alt="VietHope"
@@ -269,6 +276,6 @@ export function Brand({ light = false }: { light?: boolean }) {
       <span className={cn("hidden font-display text-[15px] font-bold tracking-tight sm:block", light && "text-white")}>
         READY&nbsp;Hub
       </span>
-    </div>
+    </Tag>
   );
 }
