@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
@@ -72,8 +72,8 @@ export function PlatformMark({
           width: size,
           height: size,
           backgroundColor: p.hex,
-          WebkitMaskImage: `url(${p.logo})`,
-          maskImage: `url(${p.logo})`,
+          WebkitMaskImage: `url(${asset(p.logo)})`,
+          maskImage: `url(${asset(p.logo)})`,
           WebkitMaskSize: "contain",
           maskSize: "contain",
           WebkitMaskRepeat: "no-repeat",

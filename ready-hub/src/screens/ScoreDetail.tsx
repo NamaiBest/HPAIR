@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, TrendingDown, TrendingUp } from "lucide-react";
 import { WeightPanel } from "@/components/WeightPanel";
 import { ScoreMark } from "@/components/ScoreMark";
 import { Button, PlatformMark } from "@/components/ui";
+import { Footer } from "@/components/Footer";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import {
   FACTOR_KEYS, FACTOR_META, contributions, normalise, type Weights,
@@ -184,6 +185,7 @@ export function ScoreDetail({
           </div>
         </aside>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { ScoreMark } from "./ScoreMark";
 import { PlatformMark } from "./ui";
 import type { Ranked } from "@/lib/match";
 import type { Weights } from "@/lib/score";
-import { cn, formatDuration } from "@/lib/utils";
+import { asset, cn, formatDuration } from "@/lib/utils";
 
 export function CourseCard({
   course, weights, rank, done, progress, onOpen, onExplain,
@@ -31,7 +31,7 @@ export function CourseCard({
           aria-label={`Open ${course.title}`}
         >
           <img
-            src={course.thumb}
+            src={asset(course.thumb)}
             alt=""
             loading="lazy"
             className="size-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-[1.04]"

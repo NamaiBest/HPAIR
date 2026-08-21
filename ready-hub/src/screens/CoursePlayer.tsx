@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowLeft, Check, CheckCircle2, Clock, ExternalLink, Play } from "lucide-react";
 import { Button, PlatformMark } from "@/components/ui";
+import { Footer } from "@/components/Footer";
 import { ScoreMark } from "@/components/ScoreMark";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
@@ -198,6 +199,7 @@ export function CoursePlayer({
           )}
         </aside>
       </div>
+      <Footer dark />
     </div>
   );
 }

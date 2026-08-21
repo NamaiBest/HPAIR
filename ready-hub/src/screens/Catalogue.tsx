@@ -6,6 +6,7 @@ import { CourseCard } from "@/components/CourseCard";
 import { WeightPanel } from "@/components/WeightPanel";
 import { FactorLegend } from "@/components/ScoreMark";
 import { Button, Chip, PlatformMark } from "@/components/ui";
+import { Footer } from "@/components/Footer";
 import { PLATFORMS } from "@/data/platforms";
 import { LANGUAGES, type Profile } from "@/data/profile";
 import { rank as rankCourses } from "@/lib/match";
@@ -201,6 +202,8 @@ export function Catalogue({
           </div>
         </aside>
       </div>
+
+      <Footer />
 
       {/* Mobile: floating control */}
       <button

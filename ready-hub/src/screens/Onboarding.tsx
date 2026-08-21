@@ -2,12 +2,13 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Button, Card, Chip, Field } from "@/components/ui";
+import { Footer } from "@/components/Footer";
 import {
   COUNTRIES, FIELDS, GOALS, INSTITUTION_SUGGESTIONS, LANGUAGES, LEVELS,
   type Profile,
 } from "@/data/profile";
 import { CASE_STATS, ORG } from "@/data/stats";
-import { cn } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 
 const STEPS = ["Where you study", "What you study", "Where you are going"];
 
@@ -33,7 +34,7 @@ export function Onboarding({ onDone }: { onDone: (p: Profile) => void }) {
       {/* Left: the case for the platform, grounded in real figures */}
       <aside className="relative hidden overflow-hidden bg-ink px-12 py-14 text-white lg:flex lg:flex-col lg:justify-between">
         <img
-          src="/viethope/students-ydp2.jpg" alt=""
+          src={asset("/viethope/students-ydp2.jpg")} alt=""
           className="pointer-events-none absolute inset-0 size-full object-cover opacity-40"
           style={{ outline: "none" }}
         />
@@ -240,6 +241,7 @@ export function Onboarding({ onDone }: { onDone: (p: Profile) => void }) {
             disbursed over {ORG.disbursed} since {ORG.since}.
           </p>
         </div>
+        <Footer />
       </main>
     </div>
   );
@@ -258,7 +260,7 @@ export function Brand({ light = false }: { light?: boolean }) {
   return (
     <div className="flex items-center gap-3">
       <img
-        src="/viethope/viethope-logo.png"
+        src={asset("/viethope/viethope-logo.png")}
         alt="VietHope"
         className="h-9 w-auto"
         style={{ outline: "none", filter: light ? "brightness(0) invert(1)" : undefined }}

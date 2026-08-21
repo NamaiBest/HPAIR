@@ -4,10 +4,11 @@ import {
   Star, Users,
 } from "lucide-react";
 import { Button, PlatformMark } from "@/components/ui";
+import { Footer } from "@/components/Footer";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
 import type { Profile } from "@/data/profile";
-import { formatDuration } from "@/lib/utils";
+import { asset, formatDuration } from "@/lib/utils";
 
 const RUNGS = [
   {
@@ -111,13 +112,13 @@ export function Completion({
           {/* READY certificate */}
           <div className="relative overflow-hidden rounded-[18px] bg-ink p-6 text-white">
             <img
-              src="/viethope/leaf.png" alt=""
+              src={asset("/viethope/leaf.png")} alt=""
               className="pointer-events-none absolute -top-6 -right-8 w-40 opacity-[0.12]"
               style={{ outline: "none" }}
             />
             <div className="relative flex items-center gap-2.5">
               <img
-                src="/viethope/viethope-logo.png" alt="VietHope"
+                src={asset("/viethope/viethope-logo.png")} alt="VietHope"
                 className="h-7 w-auto"
                 style={{ outline: "none", filter: "brightness(0) invert(1)" }}
               />
@@ -219,6 +220,7 @@ export function Completion({
           </Button>
         </div>
       </div>
+      <Footer className="print:hidden" />
     </div>
   );
 }
