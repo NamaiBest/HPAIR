@@ -9,6 +9,8 @@ export type Persisted = {
   /** courseId -> array of completed lecture ids */
   progress: Record<string, string[]>;
   completed: string[];
+  /** courseId -> assessment result, once passed */
+  assessments: Record<string, { score: number; percentile: number }>;
 };
 
 const EMPTY: Persisted = {
@@ -17,6 +19,7 @@ const EMPTY: Persisted = {
   onboarded: false,
   progress: {},
   completed: [],
+  assessments: {},
 };
 
 function read(): Persisted {

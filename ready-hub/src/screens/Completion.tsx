@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import {
-  ArrowLeft, Building2, Check, Globe2, Languages, Printer,
+  ArrowLeft, ArrowRight, Building2, Check, Globe2, Languages, Lock, Printer,
   Star, Users,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
@@ -9,6 +9,10 @@ import { Footer } from "@/components/Footer";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
 import type { Profile } from "@/data/profile";
+import { assessmentKind } from "@/data/assessments";
+
+/** How many live openings each rung has for a top-percentile learner. */
+const OFFERS: Record<string, number> = { inperson: 2, remote: 3 };
 import { asset, formatDuration } from "@/lib/utils";
 
 const EASTER_EGG_URL = "https://namaicv.com";
@@ -47,12 +51,16 @@ const RUNGS = [
 ];
 
 export function Completion({
-  course, profile, onBack,
+  course, profile, onBack, assessment, onTakeAssessment,
 }: {
   course: Ranked;
   profile: Profile;
   onBack: () => void;
+  /** Set once the learner has passed the course assessment. */
+  assessment?: { score: number; percentile: number };
+  onTakeAssessment: () => void;
 }) {
+  const passed = Boolean(assessment);
   const platform = PLATFORM_BY_ID[course.platformId];
   const today = new Date().toLocaleDateString("en-GB", {
     day: "numeric", month: "long", year: "numeric",
@@ -171,11 +179,46 @@ export function Completion({
           toward your track and at what standard.
         </p>
 
+        {/* ── Assessment gate ──────────────────────────────────── */}
+        {!passed && (
+          <div className="mt-14 flex flex-wrap items-center gap-5 rounded-[20px] bg-ink p-7 text-white print:hidden">
+            <div className="min-w-0 flex-1">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1.5 text-[12px] font-semibold">
+                <Lock className="size-3.5" /> One step left
+              </span>
+              <h2 className="mt-4 text-[24px] leading-tight font-extrabold tracking-[-0.02em]">
+                {assessmentKind(course.id) === "exam"
+                  ? "Pass the assessment to open placements"
+                  : "Submit your project to open placements"}
+              </h2>
+              <p className="mt-2.5 max-w-[54ch] text-[14px] leading-relaxed text-white/70">
+                {assessmentKind(course.id) === "exam"
+                  ? "Finishing the videos earns the certificate. The graded exam is what proves you can apply it — and it is what employers and placement partners actually look at."
+                  : "Applied courses are marked on work. Your submission is graded against everyone in your cohort who answered the same brief."}
+              </p>
+            </div>
+            <Button size="lg" onClick={onTakeAssessment} className="shrink-0">
+              {assessmentKind(course.id) === "exam" ? "Take the assessment" : "Start the project"}
+              <ArrowRight className="size-4" />
+            </Button>
+          </div>
+        )}
+
         {/* ── Opportunity ladder ───────────────────────────────── */}
-        <h2 className="mt-14 text-[26px] font-extrabold tracking-[-0.02em]">What opens up now</h2>
-        <p className="mt-2 max-w-xl text-[14.5px] opacity-55">
-          Every route below is real work with a named responsibility. None of them are waiting lists.
-        </p>
+        <div className="mt-14 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="text-[26px] font-extrabold tracking-[-0.02em]">What opens up now</h2>
+            <p className="mt-2 max-w-xl text-[14.5px] opacity-55">
+              Every route below is real work with a named responsibility. None of them are waiting lists.
+            </p>
+          </div>
+          {passed && (
+            <span className="inline-flex items-center gap-2 rounded-full bg-leaf/15 px-3.5 py-2 text-[12.5px] font-semibold text-leaf-dim">
+              <Check className="size-3.5" />
+              Unlocked · {assessment!.score}% · top {assessment!.percentile + 1}%
+            </span>
+          )}
+        </div>
 
         <div className="mt-6 flex flex-col gap-3">
           {RUNGS.map((r, i) => (
@@ -183,7 +226,10 @@ export function Completion({
               key={r.id}
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.15 + i * 0.08 }}
-              className="relative overflow-hidden rounded-[18px] bg-white p-5 pl-6 shadow-[0_0_0_1px_rgb(6_39_44/0.07)]"
+              className={`relative overflow-hidden rounded-[18px] bg-white p-5 pl-6 shadow-[0_0_0_1px_rgb(6_39_44/0.07)] transition-[filter,opacity] duration-500 ${
+                passed ? "" : "opacity-45 grayscale"
+              }`}
+              aria-disabled={!passed}
             >
               <span className="pointer-events-none absolute inset-y-0 left-0 w-1" style={{ background: r.accent }} aria-hidden />
               <div className="flex flex-wrap items-start gap-4">
@@ -214,8 +260,19 @@ export function Completion({
                     </div>
                   )}
                 </div>
-                <Button variant={r.id === "contributor" ? "primary" : "outline"} size="sm" className="shrink-0 print:hidden">
-                  {r.id === "contributor" ? "Choose a role" : "See openings"}
+                <Button
+                  variant={r.id === "contributor" ? "primary" : "outline"}
+                  size="sm"
+                  className="shrink-0 print:hidden"
+                  disabled={!passed}
+                >
+                  {!passed ? (
+                    <><Lock className="size-3.5" /> Locked</>
+                  ) : r.id === "contributor" ? (
+                    "Choose a role"
+                  ) : (
+                    `See ${OFFERS[r.id] ?? 0} openings`
+                  )}
                 </Button>
               </div>
             </motion.div>

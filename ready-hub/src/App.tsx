@@ -8,6 +8,7 @@ import { Catalogue } from "@/screens/Catalogue";
 import { ScoreDetail } from "@/screens/ScoreDetail";
 import { CoursePlayer } from "@/screens/CoursePlayer";
 import { Completion } from "@/screens/Completion";
+import { Assessment } from "@/screens/Assessment";
 import { Button, Chip, Field } from "@/components/ui";
 import { usePersisted } from "@/lib/storage";
 import { rank as rankCourses } from "@/lib/match";
@@ -25,7 +26,8 @@ type View =
   | { name: "catalogue"; query?: string; platform?: string | null }
   | { name: "score"; courseId: string }
   | { name: "course"; courseId: string }
-  | { name: "complete"; courseId: string };
+  | { name: "complete"; courseId: string }
+  | { name: "assessment"; courseId: string };
 
 export default function App() {
   const { state, patch, update } = usePersisted();
@@ -154,6 +156,22 @@ export default function App() {
               course={byId(view.courseId)}
               profile={profile}
               onBack={dashboard}
+              assessment={state.assessments?.[view.courseId]}
+              onTakeAssessment={() => setView({ name: "assessment", courseId: view.courseId })}
+            />
+          )}
+
+          {view.name === "assessment" && (
+            <Assessment
+              course={byId(view.courseId)}
+              onBack={() => setView({ name: "complete", courseId: view.courseId })}
+              onPassed={(result) => {
+                update((s) => ({
+                  ...s,
+                  assessments: { ...s.assessments, [view.courseId]: result },
+                }));
+                setView({ name: "complete", courseId: view.courseId });
+              }}
             />
           )}
         </motion.div>

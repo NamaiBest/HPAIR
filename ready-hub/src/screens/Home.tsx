@@ -4,16 +4,13 @@ import { Brand } from "@/components/Brand";
 import { LangToggle } from "@/components/LangToggle";
 import { Button, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
-import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { PLATFORMS } from "@/data/platforms";
 import { CASE_STATS } from "@/data/stats";
-import {
-  coursesByPlatform, platformsUsed, totalCourses, totalLectures, totalMinutes,
-} from "@/lib/reportStats";
+import { CATALOGUE_SCALE, PLATFORM_SCALE } from "@/lib/reportStats";
 import { useT } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
 
-const countFor = (id: string) => coursesByPlatform.find((p) => p.id === id)?.count ?? 0;
+const countFor = (id: string) => PLATFORM_SCALE[id] ?? 0;
 
 export function Home({
   onboarded, onGetStarted, onContinue,
@@ -73,10 +70,10 @@ export function Home({
 
             {/* Live catalogue counts, kept small and factual */}
             <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-black/[0.07] pt-7">
-              <Metric value={totalCourses} label={t("home.stat.courses")} />
-              <Metric value={platformsUsed} label={t("home.stat.platforms")} />
-              <Metric value={totalLectures} label={t("home.stat.lectures")} />
-              <Metric value={Math.round(totalMinutes / 60)} suffix="h" label={t("home.stat.hours")} />
+              <Metric value={CATALOGUE_SCALE.courses} label={t("home.stat.courses")} />
+              <Metric value={CATALOGUE_SCALE.platforms} label={t("home.stat.platforms")} />
+              <Metric value={CATALOGUE_SCALE.lectures} label={t("home.stat.lectures")} />
+              <Metric value={CATALOGUE_SCALE.hours} suffix="h" label={t("home.stat.hours")} />
             </dl>
           </motion.div>
 
@@ -184,7 +181,7 @@ function Metric({ value, suffix, label }: { value: number; suffix?: string; labe
   return (
     <div>
       <dt className="flex items-baseline gap-0.5 font-mono text-[28px] leading-none font-bold">
-        <AnimatedNumber value={value} decimals={0} />
+        {value.toLocaleString()}
         {suffix && <span className="text-base opacity-50">{suffix}</span>}
       </dt>
       <dd className="mt-1.5 max-w-[16ch] text-[12px] leading-snug opacity-50">{label}</dd>
