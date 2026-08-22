@@ -1,4 +1,3 @@
-// READY Hub — Ecosystem update 2026-08-23
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
@@ -11,6 +10,10 @@ import { CoursePlayer } from "@/screens/CoursePlayer";
 import { Completion } from "@/screens/Completion";
 import { Assessment } from "@/screens/Assessment";
 import { ComingSoonPage } from "@/screens/ComingSoonPage";
+import { CommunityPage } from "@/screens/CommunityPage";
+import { CollaboratePage } from "@/screens/CollaboratePage";
+import { UpskillPage } from "@/screens/UpskillPage";
+import { ResumePage } from "@/screens/ResumePage";
 import { Button, Chip, Field } from "@/components/ui";
 import { usePersisted } from "@/lib/storage";
 import { rank as rankCourses } from "@/lib/match";
@@ -183,7 +186,34 @@ export default function App() {
             />
           )}
 
-          {view.name === "ecosystem" && (
+          {view.name === "ecosystem" && view.feature === "forum" && (
+            <CommunityPage
+              field={profile.field}
+              onBack={home}
+              onHome={home}
+              onExploreCourse={(courseId) => setView({ name: "score", courseId })}
+            />
+          )}
+
+          {view.name === "ecosystem" && view.feature === "collab" && (
+            <CollaboratePage field={profile.field} onBack={home} onHome={home} />
+          )}
+
+          {view.name === "ecosystem" && view.feature === "projects" && (
+            <UpskillPage onBack={home} onHome={home} />
+          )}
+
+          {view.name === "ecosystem" && view.feature === "resume" && (
+            <ResumePage
+              profile={profile}
+              completedCourses={ranked.filter((c) => state.completed.includes(c.id))}
+              assessments={state.assessments}
+              onBack={home}
+              onHome={home}
+            />
+          )}
+
+          {view.name === "ecosystem" && view.feature === "fame" && (
             <ComingSoonPage
               feature={view.feature}
               onBack={home}

@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import {
   ArrowRight, Play, Trophy, MessageSquare, Handshake, Wrench, FileText,
-  GraduationCap, Sparkles,
+  Sparkles,
 } from "lucide-react";
 import { Brand } from "@/components/Brand";
 import { LangToggle } from "@/components/LangToggle";
@@ -9,19 +9,18 @@ import { Button, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
 import { CountUp } from "@/components/CountUp";
 import { WorldMap } from "@/components/WorldMap";
+import { NetworkGraphic } from "@/components/NetworkGraphic";
 import { PLATFORMS } from "@/data/platforms";
 import { CASE_STATS } from "@/data/stats";
 import { CATALOGUE_SCALE, PLATFORM_SCALE } from "@/lib/reportStats";
 import { useT, type TKey } from "@/lib/i18n";
-import { asset } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 const countFor = (id: string) => PLATFORM_SCALE[id] ?? 0;
 
 type EcoFeature = "fame" | "forum" | "collab" | "projects" | "resume";
 
-const ECO_PILLS: { id: EcoFeature | "learn"; icon: ReactNode; key: TKey }[] = [
-  { id: "learn", icon: <GraduationCap className="size-3.5" />, key: "eco.learn" },
+const ECO_PILLS: { id: EcoFeature; icon: ReactNode; key: TKey }[] = [
   { id: "forum", icon: <MessageSquare className="size-3.5" />, key: "eco.community" },
   { id: "collab", icon: <Handshake className="size-3.5" />, key: "eco.collaborate" },
   { id: "projects", icon: <Wrench className="size-3.5" />, key: "eco.upskill" },
@@ -104,7 +103,7 @@ export function Home({
             {ECO_PILLS.map((pill) => (
               <button
                 key={pill.id}
-                onClick={() => pill.id === "learn" ? (onboarded ? onContinue() : onGetStarted()) : onFeature(pill.id)}
+                onClick={() => onFeature(pill.id)}
                 className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-semibold tracking-wide text-ink/55 transition-all duration-150 hover:bg-ink/[0.05] hover:text-ink active:scale-[0.96]"
               >
                 {pill.icon}
@@ -254,11 +253,7 @@ export function Home({
                 {t("home.statsSub")}
               </p>
               <div className="mt-8 overflow-hidden rounded-[18px]">
-                <img
-                  src={asset("/viethope/students-volunteer.jpg")}
-                  alt=""
-                  className="h-56 w-full object-cover"
-                />
+                <NetworkGraphic className="h-56 w-full" />
               </div>
             </div>
 
