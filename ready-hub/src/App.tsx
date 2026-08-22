@@ -1,3 +1,4 @@
+// READY Hub — Ecosystem update 2026-08-23
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
