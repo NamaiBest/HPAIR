@@ -70,12 +70,15 @@ const DICT = {
   "ob.university": { en: "University", vi: "Trường đại học" },
   "ob.universityHint": { en: "Search or type your own", vi: "Tìm kiếm hoặc tự nhập" },
   "ob.universityPlaceholder": { en: "Start typing…", vi: "Bắt đầu nhập…" },
-  "ob.language": { en: "Preferred language", vi: "Ngôn ngữ ưu tiên" },
-  "ob.languageHint": { en: "Used to filter the catalogue", vi: "Dùng để lọc danh mục" },
+  "ob.language": { en: "Languages you read comfortably", vi: "Ngôn ngữ bạn đọc tốt" },
+  "ob.languageHint": { en: "Choose as many as apply", vi: "Chọn tất cả những gì phù hợp" },
   "ob.level": { en: "Current studies", vi: "Bậc học hiện tại" },
   "ob.year": { en: "Year of study", vi: "Năm học" },
   "ob.yearHint": { en: "Undergraduate, master's or doctoral", vi: "Đại học, thạc sĩ hoặc tiến sĩ" },
-  "ob.major": { en: "Major", vi: "Chuyên ngành" },
+  "ob.field": { en: "Field of study", vi: "Lĩnh vực học tập" },
+  "ob.major": { en: "Your major", vi: "Chuyên ngành của bạn" },
+  "ob.majorHint": { en: "Optional, in your own words", vi: "Không bắt buộc, theo cách bạn gọi" },
+  "ob.majorPlaceholder": { en: "For example, Applied Linguistics", vi: "Ví dụ: Ngôn ngữ học ứng dụng" },
   "ob.goal": { en: "What are you hoping this leads to?", vi: "Bạn mong điều này dẫn đến đâu?" },
   "ob.goalHint": { en: "This changes how courses are ranked for you", vi: "Điều này thay đổi cách xếp hạng khoá học cho bạn" },
   "ob.finish": { en: "See my courses", vi: "Xem khoá học của tôi" },
@@ -137,6 +140,75 @@ const DICT = {
   "level.Beginner": { en: "Beginner", vi: "Cơ bản" },
   "level.Intermediate": { en: "Intermediate", vi: "Trung cấp" },
   "level.Advanced": { en: "Advanced", vi: "Nâng cao" },
+
+  // ── Ecosystem Pill Bar ──────────────────────────────────────
+  "eco.learn": { en: "Learn", vi: "Học" },
+  "eco.community": { en: "Community", vi: "Cộng đồng" },
+  "eco.collaborate": { en: "Collaborate", vi: "Hợp tác" },
+  "eco.upskill": { en: "Self-Upskill", vi: "Tự nâng cấp" },
+  "eco.resume": { en: "Digital Resume", vi: "Hồ sơ số" },
+
+  // ── Coming Back for More ──────────────────────────────────
+  "loop.title": { en: "Coming Back for More", vi: "Quay Lại Để Nhận Thêm" },
+  "loop.sub": { en: "The loop that never stops. Learn, build, get noticed, repeat.", vi: "Vòng lặp không bao giờ dừng. Học, xây dựng, được chú ý, lặp lại." },
+
+  "loop.fame.tag": { en: "If your project is crazy good, it makes the wall.", vi: "Nếu dự án bạn đủ xuất sắc, nó sẽ lên bảng vàng." },
+  "loop.fame.title": { en: "Hall of Fame", vi: "Bảng Vinh Danh" },
+  "loop.fame.desc": { en: "Your best work gets featured on the READY Hub Hall of Fame. Employers see it. The world sees it. No more screaming into the void.", vi: "Tác phẩm tốt nhất của bạn được trưng bày trên Bảng Vinh Danh READY Hub. Nhà tuyển dụng thấy. Thế giới thấy. Không còn hét vào khoảng trống." },
+
+  "loop.forum.tag": { en: "Ask the people who've been there.", vi: "Hỏi những người đã từng trải." },
+  "loop.forum.title": { en: "Community Forum", vi: "Diễn đàn Cộng đồng" },
+  "loop.forum.desc": { en: "A Reddit-style forum where learners ask questions, employers answer, and the conversation itself recommends the right course to take next.", vi: "Diễn đàn kiểu Reddit nơi người học đặt câu hỏi, nhà tuyển dụng trả lời, và cuộc trò chuyện tự gợi ý khoá học phù hợp tiếp theo." },
+
+  "loop.collab.tag": { en: "You bring the idea. We bring the team.", vi: "Bạn mang ý tưởng. Chúng tôi mang đội ngũ." },
+  "loop.collab.title": { en: "Cross-Discipline Collab Hub", vi: "Trung tâm Hợp tác Liên ngành" },
+  "loop.collab.desc": { en: "Need an ML engineer for your commerce startup? Someone needs a designer for their hardware project? Match across disciplines, build together.", vi: "Cần kỹ sư ML cho startup thương mại? Ai đó cần designer cho dự án phần cứng? Kết nối liên ngành, cùng xây dựng." },
+
+  "loop.projects.tag": { en: "Build something real. Then build the next thing.", vi: "Xây thứ gì đó thật. Rồi xây tiếp." },
+  "loop.projects.title": { en: "Project Portal: Work & Learn", vi: "Cổng Dự án: Làm & Học" },
+  "loop.projects.desc": { en: "A guided project portal that helps you find a real project, work on it, and once you're done — suggests the next one. A perpetual upskill machine.", vi: "Cổng dự án có hướng dẫn giúp bạn tìm dự án thật, thực hiện, và khi xong — gợi ý dự án tiếp. Cỗ máy nâng cấp không ngừng." },
+
+  "loop.resume.tag": { en: "Everything you've done. One link.", vi: "Mọi thứ bạn đã làm. Một liên kết." },
+  "loop.resume.title": { en: "Digital Resume for All", vi: "Hồ sơ Số cho Tất cả" },
+  "loop.resume.desc": { en: "Every course, every project, every assessment — compiled into a living digital resume you can share with anyone, anywhere.", vi: "Mỗi khoá học, mỗi dự án, mỗi bài đánh giá — tổng hợp thành hồ sơ số sống động để chia sẻ với bất kỳ ai, bất kỳ đâu." },
+
+  "loop.explore": { en: "Explore", vi: "Khám phá" },
+  "loop.comingSoon": { en: "Coming soon", vi: "Sắp ra mắt" },
+
+  // ── Coming Soon Pages ─────────────────────────────────────
+  "soon.back": { en: "Back to home", vi: "Về trang chủ" },
+  "soon.notify": { en: "Notify me when it's live", vi: "Thông báo khi ra mắt" },
+  "soon.building": { en: "We're building this right now.", vi: "Chúng tôi đang xây dựng." },
+
+  "soon.fame.hero": { en: "Your work deserves a spotlight.", vi: "Tác phẩm của bạn xứng đáng được chú ý." },
+  "soon.fame.p1": { en: "Complete a course assessment with distinction and your project could be featured on the READY Hub Hall of Fame — visible to employers, mentors, and every other learner on the platform.", vi: "Hoàn thành bài đánh giá xuất sắc và dự án của bạn có thể lên Bảng Vinh Danh READY Hub — hiển thị cho nhà tuyển dụng, cố vấn, và mọi người học." },
+  "soon.fame.b1": { en: "Curated showcase of top student projects", vi: "Trưng bày các dự án sinh viên hàng đầu" },
+  "soon.fame.b2": { en: "Employer-visible with direct contact option", vi: "Nhà tuyển dụng xem được, liên hệ trực tiếp" },
+  "soon.fame.b3": { en: "Updated every assessment cycle", vi: "Cập nhật mỗi kỳ đánh giá" },
+
+  "soon.forum.hero": { en: "The conversation that teaches you what courses can't.", vi: "Cuộc trò chuyện dạy bạn điều mà khoá học không thể." },
+  "soon.forum.p1": { en: "A Reddit-style community where learners post questions, employers share real industry insights, and READY Hub's engine recommends courses based on the threads you engage with.", vi: "Cộng đồng kiểu Reddit nơi người học đặt câu hỏi, nhà tuyển dụng chia sẻ kiến thức thực tế, và hệ thống READY Hub gợi ý khoá học dựa trên các chủ đề bạn tham gia." },
+  "soon.forum.b1": { en: "Ask employers real questions, get real answers", vi: "Hỏi nhà tuyển dụng, nhận câu trả lời thực" },
+  "soon.forum.b2": { en: "AI-powered course recommendations from discussions", vi: "Gợi ý khoá học bằng AI từ cuộc thảo luận" },
+  "soon.forum.b3": { en: "Build reputation through helpful contributions", vi: "Xây dựng uy tín qua đóng góp hữu ích" },
+
+  "soon.collab.hero": { en: "Great ideas need great teams.", vi: "Ý tưởng lớn cần đội ngũ lớn." },
+  "soon.collab.p1": { en: "Post your startup idea or side project and find collaborators from different backgrounds — commerce students pair with ML engineers, designers team up with hardware hackers. Real cross-discipline teamwork.", vi: "Đăng ý tưởng startup hoặc dự án phụ và tìm cộng tác viên từ nhiều lĩnh vực — sinh viên thương mại ghép với kỹ sư ML, designer hợp tác với hardware hacker. Hợp tác liên ngành thực thụ." },
+  "soon.collab.b1": { en: "Post a project brief, get matched with the right people", vi: "Đăng mô tả dự án, được ghép với người phù hợp" },
+  "soon.collab.b2": { en: "Cross-discipline: ML + Commerce + Design + Hardware", vi: "Liên ngành: ML + Thương mại + Thiết kế + Phần cứng" },
+  "soon.collab.b3": { en: "Built-in project management tools", vi: "Công cụ quản lý dự án tích hợp" },
+
+  "soon.projects.hero": { en: "Work on something real. Learn by doing.", vi: "Làm điều thật. Học qua thực hành." },
+  "soon.projects.p1": { en: "The Project Portal gives you a real project to work on — not a toy exercise. Finish one and the system suggests the next, creating a continuous cycle of building, learning, and levelling up.", vi: "Cổng Dự án cho bạn dự án thật — không phải bài tập đồ chơi. Hoàn thành một dự án, hệ thống gợi ý dự án tiếp, tạo chu kỳ liên tục xây dựng, học hỏi, và nâng cấp." },
+  "soon.projects.b1": { en: "Real projects, not toy exercises", vi: "Dự án thật, không phải bài tập đồ chơi" },
+  "soon.projects.b2": { en: "AI-suggested next projects based on your progress", vi: "AI gợi ý dự án tiếp theo dựa trên tiến độ" },
+  "soon.projects.b3": { en: "Portfolio-ready output from day one", vi: "Sản phẩm sẵn sàng cho portfolio từ ngày đầu" },
+
+  "soon.resume.hero": { en: "One link. Your entire story.", vi: "Một liên kết. Toàn bộ câu chuyện của bạn." },
+  "soon.resume.p1": { en: "Every course you complete, every project you build, every assessment you pass — automatically compiled into a living digital resume. Share it with employers, attach it to applications, or just flex on LinkedIn.", vi: "Mỗi khoá học hoàn thành, mỗi dự án xây dựng, mỗi bài đánh giá vượt qua — tự động tổng hợp thành hồ sơ số sống động. Chia sẻ với nhà tuyển dụng, đính kèm đơn xin việc, hoặc khoe trên LinkedIn." },
+  "soon.resume.b1": { en: "Auto-generated from your READY Hub activity", vi: "Tự động tạo từ hoạt động READY Hub" },
+  "soon.resume.b2": { en: "Verified certificates and assessment scores included", vi: "Bao gồm chứng chỉ và điểm đánh giá xác thực" },
+  "soon.resume.b3": { en: "Shareable link, embeddable widget", vi: "Liên kết chia sẻ, widget nhúng được" },
 
   // ── Footer ────────────────────────────────────────────────
   "footer.credit": { en: "READY Hub · built for the VietHope Impact Challenge by Namai Chandra · Team V13", vi: "READY Hub · xây dựng cho VietHope Impact Challenge bởi Namai Chandra · Nhóm V13" },

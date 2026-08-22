@@ -94,7 +94,7 @@ export type FitInput = {
   courseGoals: string[];
   profileField: string;
   profileLevel: "Beginner" | "Some experience" | "Confident";
-  profileLanguage: string;
+  profileLanguages: string[];
   profileGoal: string;
 };
 
@@ -112,8 +112,9 @@ export function fitAdjustment(i: FitInput): number {
   // and the catalogue stops responding to who the learner actually is.
   adj += i.courseField === i.profileField ? 0.9 : -0.5;
 
-  // Taught in a language the learner reads fluently.
-  adj += i.courseLanguages.includes(i.profileLanguage) ? 0.35 : -0.25;
+  // Taught in any language the learner reads comfortably.
+  const sharesLanguage = i.courseLanguages.some((l) => i.profileLanguages.includes(l));
+  adj += sharesLanguage ? 0.35 : -0.25;
 
   // Level match. One step above the learner is a stretch, not a mismatch.
   const gap = COURSE_RANK[i.courseLevel] - LEVEL_RANK[i.profileLevel];

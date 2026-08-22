@@ -18,7 +18,7 @@ export type ExamQuestion = {
 };
 
 /** Creative and applied fields are marked on submitted work, not multiple choice. */
-const PROJECT_FIELDS = new Set(["Arts & Humanities"]);
+const PROJECT_FIELDS = new Set(["Arts & Humanities", "Design & Media", "Performing Arts"]);
 const PROJECT_PLATFORMS = new Set(["canva", "figma"]);
 
 export function assessmentKind(courseId: string): AssessmentKind {

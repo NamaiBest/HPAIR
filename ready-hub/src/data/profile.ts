@@ -79,24 +79,38 @@ export const UNIVERSITIES: Record<string, string[]> = {
 };
 
 export const FIELDS = [
-  "Finance",
-  "Engineering",
-  "Social Sciences",
-  "Agriculture",
-  "Business",
   "Arts & Humanities",
+  "Design & Media",
+  "Communications",
+  "Performing Arts",
+  "Social Sciences",
+  "Education",
+  "Business",
+  "Finance",
+  "Economics",
+  "Engineering",
   "Computer Science",
+  "Agriculture",
+  "Health Sciences",
+  "Law & Policy",
 ] as const;
 export type Field = (typeof FIELDS)[number];
 
 export const FIELD_VI: Record<Field, string> = {
-  Finance: "Tài chính",
-  Engineering: "Kỹ thuật",
-  "Social Sciences": "Khoa học xã hội",
-  Agriculture: "Nông nghiệp",
-  Business: "Kinh doanh",
   "Arts & Humanities": "Nghệ thuật & Nhân văn",
+  "Design & Media": "Thiết kế & Truyền thông",
+  Communications: "Truyền thông",
+  "Performing Arts": "Nghệ thuật biểu diễn",
+  "Social Sciences": "Khoa học xã hội",
+  Education: "Giáo dục",
+  Business: "Kinh doanh",
+  Finance: "Tài chính",
+  Economics: "Kinh tế",
+  Engineering: "Kỹ thuật",
   "Computer Science": "Khoa học máy tính",
+  Agriculture: "Nông nghiệp",
+  "Health Sciences": "Khoa học sức khoẻ",
+  "Law & Policy": "Luật & Chính sách",
 };
 
 /** Where the learner is in their education, rather than a self-rated skill guess. */
@@ -142,21 +156,27 @@ export const LANGUAGE_VI: Record<Language, string> = {
 export type Profile = {
   country: string;
   institution: string;
+  /** Broad field of study, used to rank the catalogue. */
   field: Field;
+  /** The learner's own major, in their words. Free text, never a dropdown:
+   *  a humanities student can major in something technical and vice versa. */
+  major: string;
   studyLevel: StudyLevel;
   year: Year;
   goal: Goal;
-  language: Language;
+  /** Languages the learner reads comfortably. At least one. */
+  languages: Language[];
 };
 
 export const DEFAULT_PROFILE: Profile = {
   country: "Vietnam",
-  institution: "Can Tho University",
+  institution: "VinUniversity",
   field: "Finance",
+  major: "",
   studyLevel: "Undergraduate",
   year: 2,
   goal: "Move into a technical role",
-  language: "Vietnamese",
+  languages: ["Vietnamese", "English"],
 };
 
 /**

@@ -10,9 +10,10 @@ export type Ranked = Course & { score: number; fit: number; reason: Reason };
 /** Why this course surfaced for this specific learner. */
 function reasonFor(c: Course, p: Profile): Reason {
   const sameField = c.field === p.field;
-  const inLanguage = c.languages.includes(p.language);
+  const shared = c.languages.filter((l) => p.languages.includes(l));
+  const inLanguage = shared.length > 0;
   const servesGoal = c.goals.includes(p.goal);
-  const vars = { field: p.field, goal: p.goal, language: p.language, level: c.level };
+  const vars = { field: p.field, goal: p.goal, language: shared[0] ?? p.languages[0], level: c.level };
 
   if (sameField && servesGoal) return { key: "reason.fieldAndGoal", vars };
   if (servesGoal && inLanguage) return { key: "reason.goalAndLanguage", vars };
@@ -32,7 +33,7 @@ export function rank(profile: Profile, weights: Weights): Ranked[] {
       courseGoals: c.goals,
       profileField: profile.field,
       profileLevel: derivedLevel(profile),
-      profileLanguage: profile.language,
+      profileLanguages: profile.languages,
       profileGoal: profile.goal,
     });
     return {

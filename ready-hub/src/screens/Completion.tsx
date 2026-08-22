@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import {
-  ArrowLeft, ArrowRight, Building2, Check, CheckCircle2, Globe2, Languages, Lock, Printer,
+  ArrowLeft, ArrowRight, Building2, Check, CheckCircle2, ExternalLink, Globe2, Languages, Lock, Printer,
   Star, Users,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
@@ -10,9 +10,9 @@ import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
 import type { Profile } from "@/data/profile";
 import { assessmentKind } from "@/data/assessments";
+import { placementsFor } from "@/data/placements";
 
-/** How many live openings each rung has for a top-percentile learner. */
-const OFFERS: Record<string, number> = { inperson: 2, remote: 3 };
+
 import { asset, formatDuration } from "@/lib/utils";
 
 const EASTER_EGG_URL = "https://namaicv.com";
@@ -77,6 +77,10 @@ export function Completion({
   onTakeAssessment: () => void;
 }) {
   const passed = Boolean(assessment);
+  const openings = (rung: string) =>
+    rung === "inperson" || rung === "remote"
+      ? placementsFor(rung, profile.country)
+      : [];
   const platform = PLATFORM_BY_ID[course.platformId];
   const today = new Date().toLocaleDateString("en-GB", {
     day: "numeric", month: "long", year: "numeric",
@@ -274,6 +278,28 @@ export function Completion({
                   </div>
                   <p className="mt-1.5 max-w-2xl text-[13.5px] leading-relaxed opacity-65">{r.body}</p>
 
+                  {passed && r.id !== "contributor" && openings(r.id).length > 0 && (
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {openings(r.id).map((o) => (
+                        <li key={o.id}>
+                          <a
+                            href={o.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-[13px] bg-black/[0.035] px-3.5 py-3 transition-colors duration-150 hover:bg-black/[0.06]"
+                          >
+                            <span className="text-[13px] font-semibold">{o.title}</span>
+                            <span className="text-[12px] opacity-55">{o.operator}</span>
+                            <span className="ml-auto flex items-center gap-2 text-[11.5px] opacity-45">
+                              {o.location} · {o.window}
+                              <ExternalLink className="size-3" />
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
                   {r.roles && (
                     <div className="mt-4 grid gap-2 sm:grid-cols-2">
                       {r.roles.map((role) => (
@@ -299,13 +325,20 @@ export function Completion({
                   ) : r.id === "contributor" ? (
                     "Choose a role"
                   ) : (
-                    `See ${OFFERS[r.id] ?? 0} openings`
+                    `${openings(r.id).length} open now`
                   )}
                 </Button>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {passed && (
+          <p className="mt-5 text-[11.5px] leading-relaxed opacity-45">
+            These programmes are run by the organisations named beside them. READY Hub routes
+            qualifying learners to their application pages and is not affiliated with them.
+          </p>
+        )}
 
         <div className="mt-10 rounded-[18px] bg-ink p-7 text-white">
           <p className="max-w-2xl text-[15px] leading-relaxed">
@@ -317,8 +350,47 @@ export function Completion({
             Back to my courses
           </Button>
         </div>
+
+        <ClosingSlide />
       </div>
       <Footer className="print:hidden" />
     </div>
+  );
+}
+
+/**
+ * The closing slide. Team V13 built the whole of READY Hub inside 30 hours,
+ * and this is the note the pitch ends on.
+ */
+function ClosingSlide() {
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ type: "spring", duration: 0.6, bounce: 0 }}
+      className="relative mt-6 overflow-hidden rounded-[22px] bg-ink px-8 py-16 text-center text-white print:hidden sm:px-14 sm:py-20"
+    >
+      <span
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 120% at 50% 0%, rgba(20,189,208,0.28) 0%, rgba(20,189,208,0) 55%)",
+        }}
+        aria-hidden
+      />
+      <div className="relative">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3.5 py-1.5 font-mono text-[12px] font-semibold tracking-wide uppercase">
+          Built in 30 hours
+        </span>
+        <p className="mx-auto mt-7 max-w-[24ch] font-display text-[34px] leading-[1.08] font-extrabold tracking-[-0.025em] sm:text-[46px]">
+          If we can do this in 30 hours, we bloody well can pull off any other shit you want us to.
+        </p>
+        <p className="mx-auto mt-6 max-w-[46ch] text-[14.5px] leading-relaxed text-white/60">
+          Scoring engine, live re-ranking, six languages, real lectures, graded assessment,
+          certificates and placement routing. Team V13.
+        </p>
+      </div>
+    </motion.section>
   );
 }

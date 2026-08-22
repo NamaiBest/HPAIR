@@ -9,6 +9,7 @@ import { ScoreDetail } from "@/screens/ScoreDetail";
 import { CoursePlayer } from "@/screens/CoursePlayer";
 import { Completion } from "@/screens/Completion";
 import { Assessment } from "@/screens/Assessment";
+import { ComingSoonPage } from "@/screens/ComingSoonPage";
 import { Button, Chip, Field } from "@/components/ui";
 import { usePersisted } from "@/lib/storage";
 import { rank as rankCourses } from "@/lib/match";
@@ -19,6 +20,8 @@ import {
   STUDY_LEVELS, STUDY_LEVEL_VI, YEARS, type Profile,
 } from "@/data/profile";
 
+type EcoFeature = "fame" | "forum" | "collab" | "projects" | "resume";
+
 type View =
   | { name: "home" }
   | { name: "onboarding" }
@@ -27,7 +30,8 @@ type View =
   | { name: "score"; courseId: string }
   | { name: "course"; courseId: string }
   | { name: "complete"; courseId: string }
-  | { name: "assessment"; courseId: string };
+  | { name: "assessment"; courseId: string }
+  | { name: "ecosystem"; feature: EcoFeature };
 
 export default function App() {
   const { state, patch, update } = usePersisted();
@@ -81,6 +85,7 @@ export default function App() {
               onboarded={state.onboarded}
               onGetStarted={() => setView({ name: "onboarding" })}
               onContinue={dashboard}
+              onFeature={(f: EcoFeature) => setView({ name: "ecosystem", feature: f })}
             />
           )}
 
@@ -175,6 +180,14 @@ export default function App() {
               }}
             />
           )}
+
+          {view.name === "ecosystem" && (
+            <ComingSoonPage
+              feature={view.feature}
+              onBack={home}
+              onHome={home}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -226,7 +239,7 @@ function ProfileSheet({
             </div>
 
             <div className="mt-7 flex flex-col gap-6">
-              <Field label={t("ob.major")}>
+              <Field label={t("ob.field")}>
                 <div className="flex flex-wrap gap-1.5">
                   {FIELDS.map((f) => (
                     <Chip key={f} active={profile.field === f} onClick={() => set("field", f)}>
@@ -262,13 +275,30 @@ function ProfileSheet({
                   ))}
                 </div>
               </Field>
-              <Field label={t("ob.language")}>
+              <Field label={t("ob.language")} hint={t("ob.languageHint")}>
                 <div className="flex flex-wrap gap-1.5">
-                  {LANGUAGES.map((l) => (
-                    <Chip key={l} active={profile.language === l} onClick={() => set("language", l)}>
-                      {lang === "vi" ? LANGUAGE_VI[l] : l}
-                    </Chip>
-                  ))}
+                  {LANGUAGES.map((l) => {
+                    const on = profile.languages.includes(l);
+                    return (
+                      <Chip
+                        key={l}
+                        active={on}
+                        aria-pressed={on}
+                        onClick={() =>
+                          set(
+                            "languages",
+                            on
+                              ? profile.languages.length > 1
+                                ? profile.languages.filter((x) => x !== l)
+                                : profile.languages
+                              : [...profile.languages, l],
+                          )
+                        }
+                      >
+                        {lang === "vi" ? LANGUAGE_VI[l] : l}
+                      </Chip>
+                    );
+                  })}
                 </div>
               </Field>
               <Field label={t("ob.country")}>

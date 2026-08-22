@@ -1,5 +1,8 @@
 import { motion } from "motion/react";
-import { ArrowRight, Play } from "lucide-react";
+import {
+  ArrowRight, Play, Trophy, MessageSquare, Handshake, Wrench, FileText,
+  GraduationCap, Sparkles,
+} from "lucide-react";
 import { Brand } from "@/components/Brand";
 import { LangToggle } from "@/components/LangToggle";
 import { Button, PlatformMark } from "@/components/ui";
@@ -9,17 +12,85 @@ import { WorldMap } from "@/components/WorldMap";
 import { PLATFORMS } from "@/data/platforms";
 import { CASE_STATS } from "@/data/stats";
 import { CATALOGUE_SCALE, PLATFORM_SCALE } from "@/lib/reportStats";
-import { useT } from "@/lib/i18n";
+import { useT, type TKey } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
+import type { ReactNode } from "react";
 
 const countFor = (id: string) => PLATFORM_SCALE[id] ?? 0;
 
+type EcoFeature = "fame" | "forum" | "collab" | "projects" | "resume";
+
+const ECO_PILLS: { id: EcoFeature | "learn"; icon: ReactNode; key: TKey }[] = [
+  { id: "learn", icon: <GraduationCap className="size-3.5" />, key: "eco.learn" },
+  { id: "forum", icon: <MessageSquare className="size-3.5" />, key: "eco.community" },
+  { id: "collab", icon: <Handshake className="size-3.5" />, key: "eco.collaborate" },
+  { id: "projects", icon: <Wrench className="size-3.5" />, key: "eco.upskill" },
+  { id: "resume", icon: <FileText className="size-3.5" />, key: "eco.resume" },
+];
+
+const LOOP_CARDS: {
+  id: EcoFeature;
+  icon: ReactNode;
+  tagKey: TKey;
+  titleKey: TKey;
+  descKey: TKey;
+  accent: string;
+  glow: string;
+}[] = [
+  {
+    id: "fame",
+    icon: <Trophy className="size-7" />,
+    tagKey: "loop.fame.tag",
+    titleKey: "loop.fame.title",
+    descKey: "loop.fame.desc",
+    accent: "text-amber",
+    glow: "var(--color-amber)",
+  },
+  {
+    id: "forum",
+    icon: <MessageSquare className="size-7" />,
+    tagKey: "loop.forum.tag",
+    titleKey: "loop.forum.title",
+    descKey: "loop.forum.desc",
+    accent: "text-flow",
+    glow: "var(--color-flow)",
+  },
+  {
+    id: "collab",
+    icon: <Handshake className="size-7" />,
+    tagKey: "loop.collab.tag",
+    titleKey: "loop.collab.title",
+    descKey: "loop.collab.desc",
+    accent: "text-leaf",
+    glow: "var(--color-leaf)",
+  },
+  {
+    id: "projects",
+    icon: <Wrench className="size-7" />,
+    tagKey: "loop.projects.tag",
+    titleKey: "loop.projects.title",
+    descKey: "loop.projects.desc",
+    accent: "text-deep",
+    glow: "var(--color-deep)",
+  },
+  {
+    id: "resume",
+    icon: <FileText className="size-7" />,
+    tagKey: "loop.resume.tag",
+    titleKey: "loop.resume.title",
+    descKey: "loop.resume.desc",
+    accent: "text-flow",
+    glow: "var(--color-flow)",
+  },
+];
+
 export function Home({
-  onboarded, onGetStarted, onContinue,
+  onboarded, onGetStarted, onContinue, onFeature,
 }: {
   onboarded: boolean;
   onGetStarted: () => void;
   onContinue: () => void;
+  onFeature: (f: EcoFeature) => void;
 }) {
   const { t } = useT();
 
@@ -28,6 +99,19 @@ export function Home({
       <header className="sticky top-0 z-20 border-b border-black/[0.06] bg-white/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1120px] items-center gap-4 px-5 py-3.5 lg:px-8">
           <Brand size="lg" />
+          {/* Ecosystem pill bar */}
+          <nav className="ml-4 hidden items-center gap-1 md:flex" aria-label="Ecosystem">
+            {ECO_PILLS.map((pill) => (
+              <button
+                key={pill.id}
+                onClick={() => pill.id === "learn" ? (onboarded ? onContinue() : onGetStarted()) : onFeature(pill.id)}
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-semibold tracking-wide text-ink/55 transition-all duration-150 hover:bg-ink/[0.05] hover:text-ink active:scale-[0.96]"
+              >
+                {pill.icon}
+                {t(pill.key)}
+              </button>
+            ))}
+          </nav>
           <div className="ml-auto flex items-center gap-3">
             <LangToggle />
             <Button size="sm" className="hidden sm:inline-flex" onClick={onboarded ? onContinue : onGetStarted}>
@@ -171,7 +255,7 @@ export function Home({
               </p>
               <div className="mt-8 overflow-hidden rounded-[18px]">
                 <img
-                  src={asset("/viethope/students-ydp1.jpg")}
+                  src={asset("/viethope/students-volunteer.jpg")}
                   alt=""
                   className="h-56 w-full object-cover"
                 />
@@ -202,7 +286,105 @@ export function Home({
         </div>
       </section>
 
-      <Footer />
+      {/* ── Coming Back for More ───────────────────────────── */}
+      <section id="ecosystem" className="relative overflow-hidden border-t border-white/[0.04] bg-ink">
+        {/* Ambient glow */}
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute -top-40 left-1/2 size-[700px] -translate-x-1/2 rounded-full blur-[120px]"
+            style={{ background: "radial-gradient(circle, rgba(20,189,208,0.12) 0%, transparent 70%)" }}
+          />
+          <div
+            className="absolute -bottom-60 -right-40 size-[500px] rounded-full blur-[100px]"
+            style={{ background: "radial-gradient(circle, rgba(157,199,60,0.08) 0%, transparent 70%)" }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-[1120px] px-5 py-24 lg:px-8">
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", duration: 0.6, bounce: 0 }}
+            className="text-center"
+          >
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-[12px] font-semibold tracking-widest text-flow uppercase border border-white/[0.06]">
+              <Sparkles className="size-3.5" />
+              {t("loop.comingSoon")}
+            </span>
+            <h2 className="mt-7 text-[40px] leading-[1.05] font-extrabold tracking-[-0.03em] text-white sm:text-[52px]">
+              {t("loop.title")}
+            </h2>
+            <p className="mx-auto mt-4 max-w-[48ch] text-[16px] leading-relaxed text-white/50">
+              {t("loop.sub")}
+            </p>
+          </motion.div>
+
+          {/* Feature cards grid */}
+          <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {LOOP_CARDS.map((card, i) => (
+              <motion.button
+                key={card.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ type: "spring", duration: 0.55, bounce: 0, delay: i * 0.07 }}
+                onClick={() => onFeature(card.id)}
+                className="rh-loop-card group relative flex flex-col items-start rounded-[20px] border border-white/[0.08] bg-white/[0.03] p-7 text-left backdrop-blur-sm transition-all duration-300 hover:border-white/[0.16] hover:bg-white/[0.06] active:scale-[0.98]"
+              >
+                {/* Glow on hover */}
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.06), 0 0 60px -20px ${card.glow}`,
+                  }}
+                  aria-hidden
+                />
+                {/* Icon */}
+                <span className={`relative mb-5 inline-flex items-center justify-center rounded-2xl bg-white/[0.06] p-3 ${card.accent} transition-transform duration-300 group-hover:scale-110`}>
+                  {card.icon}
+                </span>
+                {/* Title */}
+                <h3 className="relative text-[18px] font-bold tracking-tight text-white">
+                  {t(card.titleKey)}
+                </h3>
+                {/* Tagline */}
+                <p className={`relative mt-2 text-[13px] font-semibold italic ${card.accent}`}>
+                  "{t(card.tagKey)}"
+                </p>
+                {/* Description */}
+                <p className="relative mt-3 flex-1 text-[13.5px] leading-relaxed text-white/50">
+                  {t(card.descKey)}
+                </p>
+                {/* CTA */}
+                <span className="relative mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-wide text-white/40 uppercase transition-colors duration-200 group-hover:text-white/70">
+                  {t("loop.explore")} <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </span>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Bottom CTA band */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.2 }}
+            className="mt-14 flex flex-wrap items-center justify-center gap-4 rounded-[20px] border border-white/[0.06] bg-white/[0.03] px-8 py-8 text-center"
+          >
+            <p className="max-w-[46ch] text-[15px] leading-relaxed text-white/60">
+              {t("loop.sub")}
+            </p>
+            <Button size="lg" onClick={onboarded ? onContinue : onGetStarted} className="shrink-0">
+              <Play className="size-4 translate-x-px fill-white" />
+              {onboarded ? t("action.goToCourses") : t("action.getStarted")}
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer dark />
     </div>
   );
 }

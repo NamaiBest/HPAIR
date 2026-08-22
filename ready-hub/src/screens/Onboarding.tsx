@@ -18,7 +18,8 @@ export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; o
   const [p, setP] = useState<Profile>({
     country: "", institution: "", field: "Finance",
     studyLevel: "Undergraduate", year: 2,
-    goal: "Move into a technical role", language: lang === "vi" ? "Vietnamese" : "English",
+    major: "", goal: "Move into a technical role",
+    languages: lang === "vi" ? ["Vietnamese", "English"] : ["English"],
   });
   const [touched, setTouched] = useState({ field: false, goal: false });
 
@@ -143,11 +144,30 @@ export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; o
 
                 <Field label={t("ob.language")} hint={t("ob.languageHint")}>
                   <div className="flex flex-wrap gap-2">
-                    {LANGUAGES.map((l) => (
-                      <Chip key={l} active={p.language === l} onClick={() => set("language", l)}>
-                        {lang === "vi" ? LANGUAGE_VI[l] : l}
-                      </Chip>
-                    ))}
+                    {LANGUAGES.map((l) => {
+                      const on = p.languages.includes(l);
+                      return (
+                        <Chip
+                          key={l}
+                          active={on}
+                          aria-pressed={on}
+                          onClick={() =>
+                            set(
+                              "languages",
+                              on
+                                ? // never let the last one be removed
+                                  p.languages.length > 1
+                                  ? p.languages.filter((x) => x !== l)
+                                  : p.languages
+                                : [...p.languages, l],
+                            )
+                          }
+                        >
+                          {on && <Check className="size-3.5" />}
+                          {lang === "vi" ? LANGUAGE_VI[l] : l}
+                        </Chip>
+                      );
+                    })}
                   </div>
                 </Field>
               </>
@@ -194,7 +214,7 @@ export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; o
                   </div>
                 </Field>
 
-                <Field label={t("ob.major")}>
+                <Field label={t("ob.field")}>
                   <div className="flex flex-wrap gap-2">
                     {FIELDS.map((f) => (
                       <Chip
@@ -206,6 +226,16 @@ export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; o
                       </Chip>
                     ))}
                   </div>
+                </Field>
+
+                <Field label={t("ob.major")} hint={t("ob.majorHint")}>
+                  <input
+                    value={p.major}
+                    onChange={(e) => set("major", e.target.value)}
+                    placeholder={t("ob.majorPlaceholder")}
+                    aria-label={t("ob.major")}
+                    className="h-12 w-full rounded-xl bg-white px-4 text-sm shadow-[inset_0_0_0_1px_rgb(6_39_44/0.14)] placeholder:opacity-40 focus:shadow-[inset_0_0_0_2px_var(--color-flow)] focus:outline-none"
+                  />
                 </Field>
 
                 <Field label={t("ob.goal")} hint={t("ob.goalHint")}>
