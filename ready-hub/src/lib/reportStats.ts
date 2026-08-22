@@ -1,6 +1,6 @@
 /**
  * Aggregate numbers for the impact report on the home page.
- * Derived once from the seed catalogue — no fetching, no randomness.
+ * Derived once from the seed catalogue. No fetching, no randomness.
  */
 import { COURSES } from "@/data/courses";
 import { PLATFORM_BY_ID } from "@/data/platforms";
@@ -37,7 +37,7 @@ export const avgFactors = FACTOR_KEYS.map((key) => ({
  * Catalogue-scale figures shown on the landing page.
  *
  * These describe the indexed catalogue READY Hub is built to serve. This demo
- * build ships a curated, fully playable subset (see COURSES above — 16 courses
+ * build ships a curated, fully playable subset (see COURSES above: 16 courses
  * with real lectures). If anyone asks in the room, that is the honest split:
  * these are the indexed totals, the 16 are the ones wired up for the demo.
  */

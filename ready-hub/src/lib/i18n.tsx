@@ -14,7 +14,7 @@ export const LANGS: { id: Lang; short: string; name: string }[] = [
 
 /**
  * Every user-facing string in the app. English is the source of truth;
- * Vietnamese is a real translation, not a placeholder — this is the primary
+ * Vietnamese is a real translation, not a placeholder. This is the primary
  * language for most of the learners READY Hub serves.
  */
 const DICT = {
@@ -35,12 +35,12 @@ const DICT = {
 
   // ── Landing ───────────────────────────────────────────────
   "home.eyebrow": { en: "A VietHope programme", vi: "Một chương trình của VietHope", lo: "ໂຄງການຂອງ VietHope", km: "កម្មវិធីរបស់ VietHope", th: "โครงการของ VietHope", my: "VietHope ၏ အစီအစဉ်" },
-  "home.title": { en: "1,000+ courses, one standard. Not just a course — a step into a career.",
-    vi: "Hơn 1.000 khoá học, một chuẩn mực. Không chỉ là khoá học — mà là một bước vào sự nghiệp.",
-    lo: "ຫຼັກສູດຫຼາຍກວ່າ 1,000, ມາດຕະຖານດຽວ. ບໍ່ພຽງແຕ່ຫຼັກສູດ — ແຕ່ເປັນບາດກ້າວສູ່ອາຊີບ.",
-    km: "វគ្គសិក្សាជាង 1,000 ស្តង់ដារតែមួយ។ មិនត្រឹមតែជាវគ្គសិក្សា — តែជាជំហានឆ្ពោះទៅរកអាជីព។",
-    th: "คอร์สกว่า 1,000 มาตรฐานเดียว ไม่ใช่แค่คอร์ส — แต่คือก้าวสู่อาชีพ",
-    my: "သင်တန်း ၁,၀၀၀ ကျော်၊ စံနှုန်းတစ်ခု။ သင်တန်းသက်သက်မဟုတ်ဘဲ — အသက်မွေးဝမ်းကြောင်းဆီသို့ ခြေလှမ်းတစ်ခု။" },
+  "home.title": { en: "1,000+ courses. One standard. Not just a course, but a step into a career.",
+    vi: "Hơn 1.000 khoá học. Một chuẩn mực. Không chỉ là khoá học, mà là một bước vào sự nghiệp.",
+    lo: "ຫຼັກສູດຫຼາຍກວ່າ 1,000. ມາດຕະຖານດຽວ. ບໍ່ພຽງແຕ່ຫຼັກສູດ, ແຕ່ເປັນບາດກ້າວສູ່ອາຊີບ.",
+    km: "វគ្គសិក្សាជាង 1,000។ ស្តង់ដារតែមួយ។ មិនត្រឹមតែជាវគ្គសិក្សា តែជាជំហានឆ្ពោះទៅរកអាជីព។",
+    th: "คอร์สกว่า 1,000 มาตรฐานเดียว ไม่ใช่แค่คอร์ส แต่คือก้าวสู่อาชีพ",
+    my: "သင်တန်း ၁,၀၀၀ ကျော်။ စံနှုန်းတစ်ခု။ သင်တန်းသက်သက်မဟုတ်ဘဲ အသက်မွေးဝမ်းကြောင်းဆီသို့ ခြေလှမ်းတစ်ခု။" },
   "home.sub": { en: "Every course is scored on one standard, carries a verified certificate, and ends in an assessment that opens real placements and contributor roles.",
     vi: "Mỗi khoá học được chấm theo một chuẩn, kèm chứng chỉ xác thực, và kết thúc bằng bài đánh giá mở ra cơ hội thực tập và vai trò đóng góp thực sự.",
     lo: "ທຸກຫຼັກສູດຖືກໃຫ້ຄະແນນຕາມມາດຕະຖານດຽວ, ມີໃບຢັ້ງຢືນ, ແລະ ຈົບດ້ວຍການປະເມີນທີ່ເປີດໂອກາດການເຮັດວຽກຈິງ.",
@@ -49,6 +49,7 @@ const DICT = {
     my: "သင်တန်းတိုင်းကို စံနှုန်းတစ်ခုဖြင့် အမှတ်ပေးပြီး အသိအမှတ်ပြုလက်မှတ်ပါဝင်ကာ အလုပ်အကိုင်အခွင့်အလမ်းများ ဖွင့်ပေးသည့် စစ်ဆေးမှုဖြင့် အဆုံးသတ်သည်။" },
   "home.platformsTitle": { en: "Courses from the platforms you already know", vi: "Khoá học từ những nền tảng bạn đã biết" },
   "home.platformsSub": { en: "We do not make courses. We index what already exists, score it, and point you to the right one.", vi: "Chúng tôi không tạo khoá học. Chúng tôi lập chỉ mục những gì đã có, chấm điểm, và chỉ cho bạn khoá phù hợp." },
+  "home.statsSub": { en: "READY Hub exists because the courses are already out there and most students never find the right one. These are the numbers behind that.", vi: "READY Hub tồn tại vì các khoá học đã có sẵn nhưng phần lớn sinh viên không tìm được khoá phù hợp. Đây là những con số đằng sau điều đó." },
   "home.statsTitle": { en: "The gap we are built to close", vi: "Khoảng cách chúng tôi muốn thu hẹp" },
   "home.indexedTitle": { en: "What's indexed right now", vi: "Hiện đang có trong hệ thống" },
   "home.stat.courses": { en: "courses indexed and scored", vi: "khoá học đã lập chỉ mục và chấm điểm", lo: "ຫຼັກສູດທີ່ຈັດອັນດັບແລ້ວ", km: "វគ្គសិក្សាដែលបានវាយតម្លៃ", th: "คอร์สที่จัดอันดับแล้ว", my: "အဆင့်သတ်မှတ်ပြီး သင်တန်းများ" },
@@ -138,7 +139,7 @@ const DICT = {
   "level.Advanced": { en: "Advanced", vi: "Nâng cao" },
 
   // ── Footer ────────────────────────────────────────────────
-  "footer.credit": { en: "READY Hub — built for the VietHope Impact Challenge by Namai Chandra · Team V13", vi: "READY Hub — xây dựng cho VietHope Impact Challenge bởi Namai Chandra · Nhóm V13" },
+  "footer.credit": { en: "READY Hub · built for the VietHope Impact Challenge by Namai Chandra · Team V13", vi: "READY Hub · xây dựng cho VietHope Impact Challenge bởi Namai Chandra · Nhóm V13" },
 } as const;
 
 export type TKey = keyof typeof DICT;
@@ -168,7 +169,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORE_KEY, lang);
     } catch {
-      /* private browsing — the toggle still works for this session */
+      /* private browsing. The toggle still works for this session */
     }
     document.documentElement.lang = lang;
   }, [lang]);
@@ -198,7 +199,7 @@ export function useT() {
 }
 
 /**
- * Renders a match Reason with its interpolated values localised too — a
+ * Renders a match Reason with its interpolated values localised too, because a
  * Vietnamese sentence should not have "Finance" and "Beginner" embedded in it.
  */
 export function useReason() {

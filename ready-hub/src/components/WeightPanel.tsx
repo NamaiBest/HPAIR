@@ -9,7 +9,7 @@ import { useT } from "@/lib/i18n";
 
 /**
  * The weight panel. Moving any slider recomputes every score in the catalogue
- * and re-sorts it immediately — no apply button, no confirmation step.
+ * and re-sorts it immediately. No apply button, no confirmation step.
  */
 export function WeightPanel({
   weights,
@@ -114,7 +114,7 @@ function Slider({
         step={1}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        aria-label={`${label} — ${pct}%`}
+        aria-label={`${label}: ${pct}%`}
         style={
           {
             "--thumb": meta.color,

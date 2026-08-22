@@ -4,13 +4,14 @@ export const COUNTRIES: Country[] = [
   { id: "vn", name: "Vietnam", nameVi: "Việt Nam", status: "live" },
   { id: "la", name: "Laos", nameVi: "Lào", status: "live" },
   { id: "kh", name: "Cambodia", nameVi: "Campuchia", status: "live" },
-  { id: "th", name: "Thailand", nameVi: "Thái Lan", status: "expanding" },
-  { id: "mm", name: "Myanmar", nameVi: "Myanmar", status: "expanding" },
+  { id: "th", name: "Thailand", nameVi: "Thái Lan", status: "live" },
+  { id: "mm", name: "Myanmar", nameVi: "Myanmar", status: "live" },
 ];
 
 /** Real universities, grouped by country. Used to populate the picker. */
 export const UNIVERSITIES: Record<string, string[]> = {
   Vietnam: [
+    "VinUniversity",
     "Vietnam National University, Hanoi",
     "Vietnam National University, Ho Chi Minh City",
     "University of Science, VNU-HCM",

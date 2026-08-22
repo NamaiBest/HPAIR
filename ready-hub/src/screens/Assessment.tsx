@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check, FileUp, Loader2, Upload, Users } from "lucide-react";
 import { Button } from "@/components/ui";
 import { Footer } from "@/components/Footer";
+import { PerformanceChart } from "@/components/PerformanceChart";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import {
   DEMO_RESULT, EXAM_QUESTIONS, PROJECT_BRIEF, assessmentKind,
@@ -11,9 +12,10 @@ import type { Ranked } from "@/lib/match";
 import { cn } from "@/lib/utils";
 
 export function Assessment({
-  course, onBack, onPassed,
+  course, onBack, onPassed, field,
 }: {
   course: Ranked;
+  field: string;
   onBack: () => void;
   onPassed: (result: { score: number; percentile: number }) => void;
 }) {
@@ -24,7 +26,8 @@ export function Assessment({
   const [state, setState] = useState<"form" | "marking" | "done">("form");
 
   const answered = Object.keys(answers).length;
-  const ready = kind === "exam" ? answered === EXAM_QUESTIONS.length : file !== null && note.trim().length > 0;
+  // One answer is enough to submit. Skipping questions costs marks, it does not block you.
+  const ready = kind === "exam" ? answered > 0 : file !== null && note.trim().length > 0;
 
   const submit = () => {
     setState("marking");
@@ -48,7 +51,7 @@ export function Assessment({
       <main className="mx-auto max-w-[760px] px-5 py-10">
         <AnimatePresence mode="wait">
           {state === "done" ? (
-            <Result key="done" onContinue={() => onPassed(DEMO_RESULT)} kind={kind} />
+            <Result key="done" onContinue={() => onPassed(DEMO_RESULT)} kind={kind} field={field} />
           ) : state === "marking" ? (
             <motion.div
               key="marking"
@@ -77,7 +80,7 @@ export function Assessment({
               </h1>
               <p className="mt-2.5 max-w-[58ch] text-[14.5px] leading-relaxed opacity-60">
                 {kind === "exam"
-                  ? "Five questions. Passing this is what unlocks placements and contributor roles — it is the difference between finishing a video and proving you can use it."
+                  ? "Answer what you can and submit. Passing this is what unlocks placements and contributor roles, and it is the difference between finishing a video and proving you can use it."
                   : PROJECT_BRIEF.body}
               </p>
 
@@ -182,6 +185,9 @@ export function Assessment({
                 {kind === "exam" && (
                   <span className="font-mono text-[12.5px] opacity-45">
                     {answered}/{EXAM_QUESTIONS.length} answered
+                    {answered > 0 && answered < EXAM_QUESTIONS.length && (
+                      <span className="ml-2 opacity-70">You can submit now</span>
+                    )}
                   </span>
                 )}
                 <Button size="lg" className="ml-auto" disabled={!ready} onClick={submit}>
@@ -198,7 +204,9 @@ export function Assessment({
   );
 }
 
-function Result({ onContinue, kind }: { onContinue: () => void; kind: "exam" | "project" }) {
+function Result({
+  onContinue, kind, field,
+}: { onContinue: () => void; kind: "exam" | "project"; field: string }) {
   const { score, percentile } = DEMO_RESULT;
   return (
     <motion.div
@@ -224,10 +232,14 @@ function Result({ onContinue, kind }: { onContinue: () => void; kind: "exam" | "
         <Tile value="3" label="Placements now open" tone="ink" />
       </div>
 
+      <div className="mt-9">
+        <PerformanceChart field={field} />
+      </div>
+
       <div className="mt-8 rounded-[18px] bg-ink p-6 text-white">
         <p className="text-[14.5px] leading-relaxed">
           Everything on the opportunity ladder is now unlocked. Top performers are eligible
-          for more than one placement — choose the one that fits.
+          for more than one placement, so choose the one that fits.
         </p>
         <Button variant="primary" className="mt-5" onClick={onContinue}>
           See what opened up <ArrowRight className="size-4" />

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import {
-  ArrowLeft, ArrowRight, Building2, Check, Globe2, Languages, Lock, Printer,
+  ArrowLeft, ArrowRight, Building2, Check, CheckCircle2, Globe2, Languages, Lock, Printer,
   Star, Users,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
@@ -49,6 +49,22 @@ const RUNGS = [
     ],
   },
 ];
+
+/** Shown on both certificates once the assessment has been passed. */
+function ExamMark({ dark = false }: { dark?: boolean }) {
+  return (
+    <span
+      className={
+        dark
+          ? "inline-flex items-center gap-1.5 rounded-full bg-leaf/20 px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-leaf uppercase"
+          : "inline-flex items-center gap-1.5 rounded-full bg-leaf/15 px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-leaf-dim uppercase"
+      }
+    >
+      <CheckCircle2 className="size-3" />
+      Exam taken
+    </span>
+  );
+}
 
 export function Completion({
   course, profile, onBack, assessment, onTakeAssessment,
@@ -104,9 +120,12 @@ export function Completion({
         >
           {/* Platform certificate */}
           <div className="rounded-[18px] bg-white p-6 shadow-[0_0_0_1px_rgb(6_39_44/0.08)]">
-            <div className="flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase opacity-45">
-              <PlatformMark id={course.platformId} size={14} />
-              {platform?.name} certificate
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase opacity-45">
+                <PlatformMark id={course.platformId} size={14} />
+                {platform?.name} certificate
+              </div>
+              {passed && <ExamMark />}
             </div>
             <p className="mt-5 text-[13px] opacity-50">This certifies that</p>
             <p className="mt-1 font-display text-[22px] font-bold">A READY Hub learner</p>
@@ -142,6 +161,7 @@ export function Completion({
               <span className="text-[11px] tracking-[0.14em] uppercase opacity-60">
                 READY verification
               </span>
+              {passed && <ExamMark dark />}
             </div>
             <p className="relative mt-5 text-[13px] opacity-50">Verified completion for</p>
             <p className="relative mt-1 font-display text-[22px] font-bold">
@@ -160,6 +180,14 @@ export function Completion({
                 <p className="text-[11px] opacity-45">Country</p>
                 <p className="mt-1 text-[13px] font-medium">{profile.country}</p>
               </div>
+              {passed && (
+                <div>
+                  <p className="text-[11px] opacity-45">Exam</p>
+                  <p className="mt-1 font-mono text-[13px] font-semibold text-leaf">
+                    {assessment!.score}%
+                  </p>
+                </div>
+              )}
             </div>
             <div className="relative mt-6 flex items-end justify-between border-t border-white/12 pt-4">
               <span className="text-[11.5px] opacity-45">{today}</span>
@@ -193,7 +221,7 @@ export function Completion({
               </h2>
               <p className="mt-2.5 max-w-[54ch] text-[14px] leading-relaxed text-white/70">
                 {assessmentKind(course.id) === "exam"
-                  ? "Finishing the videos earns the certificate. The graded exam is what proves you can apply it — and it is what employers and placement partners actually look at."
+                  ? "Finishing the videos earns the certificate. The graded exam is what proves you can apply it, and it is what employers and placement partners actually look at."
                   : "Applied courses are marked on work. Your submission is graded against everyone in your cohort who answered the same brief."}
               </p>
             </div>

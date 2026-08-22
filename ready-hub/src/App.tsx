@@ -164,6 +164,7 @@ export default function App() {
           {view.name === "assessment" && (
             <Assessment
               course={byId(view.courseId)}
+              field={profile.field}
               onBack={() => setView({ name: "complete", courseId: view.courseId })}
               onPassed={(result) => {
                 update((s) => ({

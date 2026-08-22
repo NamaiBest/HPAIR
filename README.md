@@ -2,7 +2,7 @@
 
 ## READY Hub
 
-A clickable demo of READY Hub — VietHope's curated gateway to digital-skills
+A clickable demo of READY Hub, VietHope's curated gateway to digital-skills
 courses for university students across the Mekong region. See
 [`ready-hub/README.md`](ready-hub/README.md) for the full demo walkthrough and
 scoring model.
@@ -93,7 +93,7 @@ READY Hub uses a curated 3-tier typography system imported via Google Fonts, des
 ### 🎙️ Presentation Cheat-Sheet (30-Second Summary)
 
 > *"We built READY Hub with a purpose-driven 3-tier font system:*
-> 1. * **Bricolage Grotesque** for headlines — gives our mission high visual personality and editorial warmth.*
-> 2. * **Instrument Sans** for interface and body copy — ensuring high readability and clean UI interactions.*
-> 3. * **IBM Plex Mono** with tabular numerals for READY Scores — ensuring that as users adjust weights in real-time, the data displays with jitter-free mathematical precision."*
+> 1. * **Bricolage Grotesque** for headlines, giving our mission high visual personality and editorial warmth.*
+> 2. * **Instrument Sans** for interface and body copy, ensuring high readability and clean UI interactions.*
+> 3. * **IBM Plex Mono** with tabular numerals for READY Scores, ensuring that as users adjust weights in real-time, the data displays with jitter-free mathematical precision."*
 

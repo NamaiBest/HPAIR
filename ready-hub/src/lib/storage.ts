@@ -36,7 +36,7 @@ function write(v: Persisted) {
   try {
     localStorage.setItem(KEY, JSON.stringify(v));
   } catch {
-    /* private browsing, blocked site data — the app still works, it just forgets */
+    /* private browsing, blocked site data. The app still works, it just forgets */
   }
 }
 

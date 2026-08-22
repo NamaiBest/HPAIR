@@ -1,6 +1,6 @@
 # READY Hub
 
-A clickable demo of READY Hub — VietHope's curated gateway to digital-skills
+A clickable demo of READY Hub, VietHope's curated gateway to digital-skills
 courses for university students across the Mekong region.
 
 Frontend only. All data is seeded locally, progress is kept in `localStorage`,
@@ -13,7 +13,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-For the pitch, prefer the production build — it starts instantly and does not
+For the pitch, prefer the production build. It starts instantly and does not
 recompile mid-demo:
 
 ```bash
@@ -22,19 +22,19 @@ npm run build && npm run preview
 
 ## The 90-second demo path
 
-1. **Onboarding** — pick Vietnam, any institution, Finance, Beginner,
+1. **Onboarding**: pick Vietnam, any institution, Finance, Beginner,
    "Move into a technical role". Three steps, visible progress.
-2. **Catalogue** — 16 courses ranked for that profile. Each card carries a
+2. **Catalogue**: 16 courses ranked for that profile. Each card carries a
    READY Score out of 10 and one line saying why *this* learner got *this* course.
 3. **The moment to slow down for.** Drag **Engagement** to 100 and the others to 0.
    Every score recomputes and the list re-sorts, animated. The top of the list goes
    from Git/Python/AI to Canva/communication/design. Drag **Density** up instead and
    "Artificial Intelligence with Python" climbs from last place to first.
-4. **Why this score?** — opens the breakdown: a radar of the four raw factors, and
+4. **Why this score?** opens the breakdown: a radar of the four raw factors, and
    each factor's live contribution in points. The weight panel and a running
    leaderboard sit alongside, so the reordering is visible while you drag.
-5. **Start this course** — real lectures play, embedded from the source platform.
-6. **Mark all lectures complete → Claim your certificate** — dual certificate plus
+5. **Start this course**: real lectures play, embedded from the source platform.
+6. **Mark all lectures complete → Claim your certificate**: dual certificate plus
    the opportunity ladder.
 
 Use the **"Editing as Finance · Beginner · Vietnam"** chip to switch profile.
@@ -42,10 +42,10 @@ Flipping Finance → Engineering visibly reorders the catalogue.
 
 ## The scoring model
 
-All of it is in [`src/lib/score.ts`](src/lib/score.ts) — open it if anyone asks.
+All of it is in [`src/lib/score.ts`](src/lib/score.ts). Open it if anyone asks.
 It is pure and deterministic: no randomness, no dates, no hidden state.
 
-Every course is rated 0–10 on four factors:
+Every course is rated 0 to 10 on four factors:
 
 | Factor | What it measures |
 | --- | --- |
@@ -56,7 +56,7 @@ Every course is rated 0–10 on four factors:
 
 The learner's weights are normalised to sum to 1, then applied. A separate
 **fit adjustment** (`fitAdjustment`) moves a score by at most ±1.2 points based on
-field, level, language and goal — enough to change the ranking, never enough to
+field, level, language and goal. That is enough to change the ranking, never enough to
 overwhelm the quality signal.
 
 Rounding happens once, in `finalScore`, so a course can never read 9.6 on the card
@@ -74,7 +74,7 @@ placement listings. No partnership with any platform is claimed or implied.
 
 ## Data collected
 
-Country, institution, field of study, level, goal, language. Nothing else — no
+Country, institution, field of study, level, goal, language. Nothing else: no
 date of birth, no ethnicity, no name. This is deliberate.
 
 ## Layout
@@ -96,7 +96,7 @@ date of birth, no ethnicity, no name. This is deliberate.
 ```
 
 The score is the one place the interface raises its voice. The numeral counts
-rather than snapping, and the bar beneath it is not decoration — each segment is
+rather than snapping, and the bar beneath it is not decoration. Each segment is
 that factor's actual contribution in points, so when a weight moves you can see
 which factor moved the score.
 

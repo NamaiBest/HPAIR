@@ -105,3 +105,31 @@ export const PROJECT_BRIEF: ProjectBrief = {
  * so the opportunity ladder can be shown unlocked in a pitch.
  */
 export const DEMO_RESULT = { score: 92, percentile: 4 };
+
+
+/**
+ * How this learner's result compares with everyone else assessed.
+ *
+ * Two reference groups: people who came in from the same field of study, and
+ * everyone else. Deterministic, so the chart is the same in every run.
+ * Bands are score ranges; values are the share of that group landing in each.
+ */
+export type Band = { band: string; sameField: number; otherFields: number };
+
+export const PERFORMANCE_BANDS: Band[] = [
+  { band: "40-49", sameField: 3, otherFields: 6 },
+  { band: "50-59", sameField: 7, otherFields: 11 },
+  { band: "60-69", sameField: 14, otherFields: 19 },
+  { band: "70-79", sameField: 26, otherFields: 27 },
+  { band: "80-89", sameField: 31, otherFields: 24 },
+  { band: "90-100", sameField: 19, otherFields: 13 },
+];
+
+/** Headline comparisons shown beside the distribution. */
+export const PEER_COMPARISON = {
+  you: 92,
+  sameFieldAverage: 78,
+  otherFieldsAverage: 73,
+  sameFieldBeaten: 94,
+  otherFieldsBeaten: 96,
+};

@@ -4,6 +4,7 @@ import { Brand } from "@/components/Brand";
 import { LangToggle } from "@/components/LangToggle";
 import { Button, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
+import { CountUp } from "@/components/CountUp";
 import { PLATFORMS } from "@/data/platforms";
 import { CASE_STATS } from "@/data/stats";
 import { CATALOGUE_SCALE, PLATFORM_SCALE } from "@/lib/reportStats";
@@ -25,7 +26,7 @@ export function Home({
     <div className="min-h-dvh bg-white">
       <header className="sticky top-0 z-20 border-b border-black/[0.06] bg-white/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1120px] items-center gap-4 px-5 py-3.5 lg:px-8">
-          <Brand />
+          <Brand size="lg" />
           <div className="ml-auto flex items-center gap-3">
             <LangToggle />
             <Button size="sm" onClick={onboarded ? onContinue : onGetStarted}>
@@ -37,7 +38,7 @@ export function Home({
 
       {/* ── Hero: copy left, the numbers on the right ─────────── */}
       <section className="mx-auto max-w-[1120px] px-5 pt-16 pb-20 lg:px-8">
-        <div className="grid gap-14 lg:grid-cols-[1fr_384px] lg:gap-16">
+        <div className="grid gap-14">
           <motion.div
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", duration: 0.55, bounce: 0 }}
@@ -45,10 +46,10 @@ export function Home({
             <span className="inline-flex items-center gap-2 rounded-full bg-flow/10 px-3 py-1.5 text-[12px] font-semibold tracking-wide text-deep uppercase">
               {t("home.eyebrow")}
             </span>
-            <h1 className="mt-6 max-w-[15ch] text-[46px] leading-[1.04] font-extrabold tracking-[-0.03em] sm:text-[58px]">
+            <h1 className="mt-6 max-w-[20ch] text-[48px] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-[64px]">
               {t("home.title")}
             </h1>
-            <p className="mt-6 max-w-[52ch] text-[16px] leading-relaxed opacity-60">
+            <p className="mt-6 max-w-[58ch] text-[16.5px] leading-relaxed opacity-60">
               {t("home.sub")}
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -69,7 +70,7 @@ export function Home({
             </div>
 
             {/* Live catalogue counts, kept small and factual */}
-            <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-black/[0.07] pt-7">
+            <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-black/[0.07] pt-8 sm:grid-cols-4">
               <Metric value={CATALOGUE_SCALE.courses} label={t("home.stat.courses")} />
               <Metric value={CATALOGUE_SCALE.platforms} label={t("home.stat.platforms")} />
               <Metric value={CATALOGUE_SCALE.lectures} label={t("home.stat.lectures")} />
@@ -77,42 +78,6 @@ export function Home({
             </dl>
           </motion.div>
 
-          {/* The case, as a clean right-hand column of figures */}
-          <motion.aside
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", duration: 0.55, bounce: 0, delay: 0.08 }}
-            className="lg:pt-3"
-          >
-            <div className="overflow-hidden rounded-[20px] bg-ink">
-              <img
-                src={asset("/viethope/students-ydp1.jpg")} alt=""
-                className="h-40 w-full object-cover opacity-95"
-              />
-              <div className="p-6">
-                <h2 className="text-[13px] font-bold tracking-wide text-white/50 uppercase">
-                  {t("home.statsTitle")}
-                </h2>
-                <div className="mt-5 flex flex-col gap-5">
-                  {CASE_STATS.map((s, i) => (
-                    <motion.div
-                      key={s.value}
-                      initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.2 + i * 0.07 }}
-                      className="flex items-baseline gap-4 border-b border-white/10 pb-4 last:border-0 last:pb-0"
-                    >
-                      <span className="w-[68px] shrink-0 font-mono text-[26px] leading-none font-semibold text-leaf">
-                        {s.value}
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-[12.5px] leading-snug text-white/75">{s.label}</span>
-                        <span className="mt-1 block text-[10.5px] text-white/35">{s.source}</span>
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.aside>
         </div>
       </section>
 
@@ -172,6 +137,51 @@ export function Home({
         </div>
       </section>
 
+
+      {/* The case for the programme, placed after the product itself */}
+      <section className="border-t border-black/[0.06] bg-white">
+        <div className="mx-auto max-w-[1120px] px-5 py-20 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16">
+            <div>
+              <h2 className="max-w-[18ch] text-[32px] leading-[1.1] font-extrabold tracking-[-0.025em]">
+                {t("home.statsTitle")}
+              </h2>
+              <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed opacity-55">
+                {t("home.statsSub")}
+              </p>
+              <div className="mt-8 overflow-hidden rounded-[18px]">
+                <img
+                  src={asset("/viethope/students-ydp1.jpg")}
+                  alt=""
+                  className="h-56 w-full object-cover"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              {CASE_STATS.map((st, i) => (
+                <motion.div
+                  key={st.value}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ type: "spring", duration: 0.5, bounce: 0, delay: i * 0.08 }}
+                  className="flex items-baseline gap-5 border-b border-black/[0.07] pb-6 last:border-0 last:pb-0"
+                >
+                  <span className="w-[72px] shrink-0 font-mono text-[30px] leading-none font-bold text-flow">
+                    {st.value}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[13px] leading-snug opacity-70">{st.label}</span>
+                    <span className="mt-1.5 block text-[11px] opacity-40">{st.source}</span>
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
@@ -180,9 +190,9 @@ export function Home({
 function Metric({ value, suffix, label }: { value: number; suffix?: string; label: string }) {
   return (
     <div>
-      <dt className="flex items-baseline gap-0.5 font-mono text-[28px] leading-none font-bold">
-        {value.toLocaleString()}
-        {suffix && <span className="text-base opacity-50">{suffix}</span>}
+      <dt className="flex items-baseline gap-0.5 font-mono text-[32px] leading-none font-bold">
+        <CountUp value={value} />
+        {suffix && <span className="text-lg opacity-50">{suffix}</span>}
       </dt>
       <dd className="mt-1.5 max-w-[16ch] text-[12px] leading-snug opacity-50">{label}</dd>
     </div>
