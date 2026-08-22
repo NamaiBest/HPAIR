@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { LayoutGrid, Search, SlidersHorizontal, X } from "lucide-react";
-import { Brand } from "./Onboarding";
+import { Brand } from "@/components/Brand";
 import { CourseCard } from "@/components/CourseCard";
 import { WeightPanel } from "@/components/WeightPanel";
 import { Button, Chip, PlatformMark } from "@/components/ui";

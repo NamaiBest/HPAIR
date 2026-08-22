@@ -16,6 +16,15 @@
   --color-paper: #f7fafa;
   --color-amber: #e0a02f;
 
+  /* Semantic aliases the vendored watermelon-ui/chart.tsx expects. Mapped onto
+     our own palette above rather than a separate shadcn theme, so a chart's
+     tooltip chrome matches the rest of the app automatically. */
+  --color-background: #ffffff;
+  --color-foreground: var(--color-ink);
+  --color-border: var(--color-silt);
+  --color-muted: var(--color-silt-2);
+  --color-muted-foreground: #5c7377;
+
   --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;

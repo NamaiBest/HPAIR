@@ -2,13 +2,15 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Button, Card, Chip, Field } from "@/components/ui";
+import { Brand } from "@/components/Brand";
 import { Footer } from "@/components/Footer";
+import { StoryPanel } from "@/components/StoryPanel";
 import {
   COUNTRIES, FIELDS, GOALS, INSTITUTION_SUGGESTIONS, LANGUAGES, LEVELS,
   type Profile,
 } from "@/data/profile";
-import { CASE_STATS, ORG } from "@/data/stats";
-import { asset, cn } from "@/lib/utils";
+import { ORG } from "@/data/stats";
+import { cn } from "@/lib/utils";
 
 const STEPS = ["Where you study", "What you study", "Where you are going"];
 
@@ -31,38 +33,10 @@ export function Onboarding({ onDone, onHome }: { onDone: (p: Profile) => void; o
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[1fr_minmax(520px,44%)]">
-      {/* Left: the case for the platform, grounded in real figures */}
-      <aside className="relative hidden overflow-hidden bg-ink px-12 py-14 text-white lg:flex lg:flex-col lg:justify-between">
-        <img
-          src={asset("/viethope/students-ydp2.jpg")} alt=""
-          className="pointer-events-none absolute inset-0 size-full object-cover opacity-40"
-          style={{ outline: "none" }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "linear-gradient(160deg,rgba(6,39,44,.72),rgba(0,128,129,.62) 50%,rgba(6,39,44,.92))" }}
-        />
-        <div className="relative">
-          <Brand light onHome={onHome} />
-        </div>
-        <div className="relative max-w-md">
-          <h1 className="text-[44px] leading-[1.03] font-extrabold tracking-[-0.02em]">
-            Thousands of courses exist. Almost none were chosen for you.
-          </h1>
-          <p className="mt-5 text-[15px] leading-relaxed text-white/75">
-            READY Hub reads the courses already out there, scores them honestly, and
-            routes you to the few that fit where you are and where you are going.
-          </p>
-        </div>
-        <div className="relative grid grid-cols-2 gap-x-8 gap-y-6">
-          {CASE_STATS.slice(0, 4).map((s) => (
-            <div key={s.value}>
-              <div className="font-mono text-3xl font-semibold text-leaf">{s.value}</div>
-              <p className="mt-1.5 text-[12px] leading-snug text-white/65">{s.label}</p>
-              <p className="mt-1 text-[10px] text-white/35">{s.source}</p>
-            </div>
-          ))}
-        </div>
+      {/* Left: the same story panel the home page opens with — same photo,
+          same headline, same stats, so arriving here feels like a continuation. */}
+      <aside className="hidden lg:block">
+        <StoryPanel onHome={onHome} className="h-full" />
       </aside>
 
       {/* Right: the form */}
@@ -253,29 +227,5 @@ function StepHead({ title, sub }: { title: string; sub: string }) {
       <h2 className="text-[30px] leading-tight font-bold tracking-[-0.02em]">{title}</h2>
       <p className="mt-2 text-[14px] opacity-55">{sub}</p>
     </div>
-  );
-}
-
-export function Brand({ light = false, onHome }: { light?: boolean; onHome?: () => void }) {
-  const Tag = onHome ? "button" : "div";
-  return (
-    <Tag
-      onClick={onHome}
-      className={cn(
-        "flex items-center gap-3",
-        onHome && "-m-1 rounded-full p-1 transition-opacity duration-150 hover:opacity-70 active:scale-[0.98]",
-      )}
-    >
-      <img
-        src={asset("/viethope/viethope-logo.png")}
-        alt="VietHope"
-        className="h-9 w-auto"
-        style={{ outline: "none", filter: light ? "brightness(0) invert(1)" : undefined }}
-      />
-      <span className={cn("hidden h-6 w-px sm:block", light ? "bg-white/25" : "bg-black/12")} />
-      <span className={cn("hidden font-display text-[15px] font-bold tracking-tight sm:block", light && "text-white")}>
-        READY&nbsp;Hub
-      </span>
-    </Tag>
   );
 }
