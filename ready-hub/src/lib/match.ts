@@ -1,28 +1,26 @@
 import { COURSES, type Course } from "@/data/courses";
 import { fitAdjustment, finalScore, type Weights } from "@/lib/score";
-import type { Profile } from "@/data/profile";
+import { derivedLevel, type Profile } from "@/data/profile";
 
-export type Ranked = Course & { score: number; fit: number; reason: string };
+/** A translatable reason, resolved to a string by the component that renders it. */
+export type Reason = { key: string; vars: Record<string, string> };
 
-/** One line explaining why this course surfaced for this specific learner. */
-function reasonFor(c: Course, p: Profile): string {
+export type Ranked = Course & { score: number; fit: number; reason: Reason };
+
+/** Why this course surfaced for this specific learner. */
+function reasonFor(c: Course, p: Profile): Reason {
   const sameField = c.field === p.field;
   const inLanguage = c.languages.includes(p.language);
   const servesGoal = c.goals.includes(p.goal);
+  const vars = { field: p.field, goal: p.goal, language: p.language, level: c.level };
 
-  if (sameField && servesGoal)
-    return `Sits inside ${p.field} and points straight at "${p.goal.toLowerCase()}".`;
-  if (servesGoal && inLanguage)
-    return `Serves your goal and is available in ${p.language}.`;
-  if (sameField)
-    return `Core ${p.field} material at ${c.level.toLowerCase()} level.`;
-  if (servesGoal)
-    return `Bridges from ${p.field} toward "${p.goal.toLowerCase()}" without assuming a technical background.`;
-  if (inLanguage)
-    return `Widely useful outside ${p.field}, and available in ${p.language}.`;
-  if (c.level === "Beginner")
-    return `A starting point outside ${p.field} that assumes nothing.`;
-  return `Strong on its own merits, though outside ${p.field}.`;
+  if (sameField && servesGoal) return { key: "reason.fieldAndGoal", vars };
+  if (servesGoal && inLanguage) return { key: "reason.goalAndLanguage", vars };
+  if (sameField) return { key: "reason.field", vars };
+  if (servesGoal) return { key: "reason.goal", vars };
+  if (inLanguage) return { key: "reason.language", vars };
+  if (c.level === "Beginner") return { key: "reason.beginner", vars };
+  return { key: "reason.merit", vars };
 }
 
 export function rank(profile: Profile, weights: Weights): Ranked[] {
@@ -33,7 +31,7 @@ export function rank(profile: Profile, weights: Weights): Ranked[] {
       courseLanguages: c.languages,
       courseGoals: c.goals,
       profileField: profile.field,
-      profileLevel: profile.level,
+      profileLevel: derivedLevel(profile),
       profileLanguage: profile.language,
       profileGoal: profile.goal,
     });

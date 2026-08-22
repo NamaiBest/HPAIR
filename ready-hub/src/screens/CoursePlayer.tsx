@@ -7,6 +7,7 @@ import { ScoreMark } from "@/components/ScoreMark";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
 import { FACTOR_KEYS, FACTOR_META, type Weights } from "@/lib/score";
+import { useReason } from "@/lib/i18n";
 import { cn, formatDuration } from "@/lib/utils";
 
 export function CoursePlayer({
@@ -21,6 +22,7 @@ export function CoursePlayer({
   onComplete: () => void;
   onExplain: () => void;
 }) {
+  const reason = useReason();
   const [active, setActive] = useState(0);
   const lecture = course.lectures[active];
   const platform = PLATFORM_BY_ID[course.platformId];
@@ -99,7 +101,7 @@ export function CoursePlayer({
           {/* Why this surfaced, kept visible while you actually study */}
           <div className="mt-7 rounded-[18px] bg-white/[0.06] p-5">
             <h2 className="text-[13px] font-bold tracking-tight">Why this was routed to you</h2>
-            <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-white/70">{course.reason}</p>
+            <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-white/70">{reason(course.reason)}</p>
             <div className="mt-4 grid gap-x-6 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-2">
               {FACTOR_KEYS.map((k) => (
                 <div key={k} className="flex items-baseline gap-2.5">

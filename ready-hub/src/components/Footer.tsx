@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 export function Footer({ dark = false, className }: { dark?: boolean; className?: string }) {
+  const { t } = useT();
   return (
     <footer
       className={cn(
@@ -9,7 +11,7 @@ export function Footer({ dark = false, className }: { dark?: boolean; className?
         className,
       )}
     >
-      READY Hub — built for the VietHope Impact Challenge by Namai Chandra · Team V13
+      {t("footer.credit")}
     </footer>
   );
 }

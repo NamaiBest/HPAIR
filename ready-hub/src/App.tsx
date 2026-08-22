@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import { Home } from "@/screens/Home";
 import { Onboarding } from "@/screens/Onboarding";
+import { Dashboard } from "@/screens/Dashboard";
 import { Catalogue } from "@/screens/Catalogue";
 import { ScoreDetail } from "@/screens/ScoreDetail";
 import { CoursePlayer } from "@/screens/CoursePlayer";
@@ -11,14 +12,17 @@ import { Button, Chip, Field } from "@/components/ui";
 import { usePersisted } from "@/lib/storage";
 import { rank as rankCourses } from "@/lib/match";
 import { DEFAULT_WEIGHTS, type Weights } from "@/lib/score";
+import { useT } from "@/lib/i18n";
 import {
-  DEFAULT_PROFILE, FIELDS, GOALS, LANGUAGES, LEVELS, COUNTRIES, type Profile,
+  COUNTRIES, DEFAULT_PROFILE, FIELDS, FIELD_VI, GOALS, GOAL_VI, LANGUAGES, LANGUAGE_VI,
+  STUDY_LEVELS, STUDY_LEVEL_VI, YEARS, type Profile,
 } from "@/data/profile";
 
 type View =
   | { name: "home" }
   | { name: "onboarding" }
-  | { name: "catalogue" }
+  | { name: "dashboard" }
+  | { name: "catalogue"; query?: string; platform?: string | null }
   | { name: "score"; courseId: string }
   | { name: "course"; courseId: string }
   | { name: "complete"; courseId: string };
@@ -35,6 +39,8 @@ export default function App() {
   const byId = (id: string) => ranked.find((c) => c.id === id)!;
 
   const setWeights = (w: Weights) => patch({ weights: w });
+  const home = () => setView({ name: "home" });
+  const dashboard = () => setView({ name: "dashboard" });
 
   const toggleLecture = (courseId: string, lectureId: string) => {
     update((s) => {
@@ -72,7 +78,7 @@ export default function App() {
             <Home
               onboarded={state.onboarded}
               onGetStarted={() => setView({ name: "onboarding" })}
-              onContinue={() => setView({ name: "catalogue" })}
+              onContinue={dashboard}
             />
           )}
 
@@ -80,9 +86,25 @@ export default function App() {
             <Onboarding
               onDone={(p) => {
                 patch({ profile: p, weights: DEFAULT_WEIGHTS, onboarded: true });
-                setView({ name: "catalogue" });
+                dashboard();
               }}
-              onHome={() => setView({ name: "home" })}
+              onHome={home}
+            />
+          )}
+
+          {view.name === "dashboard" && (
+            <Dashboard
+              profile={profile}
+              weights={weights}
+              setWeights={setWeights}
+              progress={state.progress}
+              completed={state.completed}
+              onOpenCourse={(id) => setView({ name: "course", courseId: id })}
+              onExplain={(id) => setView({ name: "score", courseId: id })}
+              onEditProfile={() => setEditing(true)}
+              onHome={home}
+              onBrowse={(platformId) => setView({ name: "catalogue", platform: platformId ?? null })}
+              onSearch={(q) => setView({ name: "catalogue", query: q })}
             />
           )}
 
@@ -93,10 +115,13 @@ export default function App() {
               setWeights={setWeights}
               progress={state.progress}
               completed={state.completed}
+              initialQuery={view.query}
+              initialPlatform={view.platform ?? null}
               onOpenCourse={(id) => setView({ name: "course", courseId: id })}
               onExplain={(id) => setView({ name: "score", courseId: id })}
               onEditProfile={() => setEditing(true)}
-              onHome={() => setView({ name: "home" })}
+              onHome={home}
+              onBack={dashboard}
             />
           )}
 
@@ -106,7 +131,7 @@ export default function App() {
               ranked={ranked}
               weights={weights}
               setWeights={setWeights}
-              onBack={() => setView({ name: "catalogue" })}
+              onBack={dashboard}
               onOpen={() => setView({ name: "course", courseId: view.courseId })}
             />
           )}
@@ -116,7 +141,7 @@ export default function App() {
               course={byId(view.courseId)}
               weights={weights}
               done={state.progress[view.courseId] ?? []}
-              onBack={() => setView({ name: "catalogue" })}
+              onBack={dashboard}
               onToggleLecture={(l) => toggleLecture(view.courseId, l)}
               onMarkAll={() => markAllLectures(view.courseId)}
               onComplete={() => complete(view.courseId)}
@@ -128,7 +153,7 @@ export default function App() {
             <Completion
               course={byId(view.courseId)}
               profile={profile}
-              onBack={() => setView({ name: "catalogue" })}
+              onBack={dashboard}
             />
           )}
         </motion.div>
@@ -153,6 +178,7 @@ function ProfileSheet({
   onChange: (p: Profile) => void;
   onClose: () => void;
 }) {
+  const { t, lang } = useT();
   const set = <K extends keyof Profile>(k: K, v: Profile[K]) => onChange({ ...profile, [k]: v });
 
   return (
@@ -170,62 +196,74 @@ function ProfileSheet({
             transition={{ type: "spring", duration: 0.42, bounce: 0 }}
           >
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold tracking-tight">Editing as</h2>
-                <p className="mt-1 text-[13px] opacity-55">
-                  Change anything here and the catalogue re-ranks behind you.
-                </p>
-              </div>
+              <h2 className="text-xl font-bold tracking-tight">{t("cat.editingAs")}</h2>
               <button
                 onClick={onClose}
                 className="grid size-10 shrink-0 place-items-center rounded-full transition-[background-color,scale] duration-150 hover:bg-black/5 active:scale-[0.96]"
               >
                 <X className="size-4" />
-                <span className="sr-only">Close</span>
+                <span className="sr-only">{t("action.done")}</span>
               </button>
             </div>
 
             <div className="mt-7 flex flex-col gap-6">
-              <Field label="Field of study">
+              <Field label={t("ob.major")}>
                 <div className="flex flex-wrap gap-1.5">
                   {FIELDS.map((f) => (
-                    <Chip key={f} active={profile.field === f} onClick={() => set("field", f)}>{f}</Chip>
+                    <Chip key={f} active={profile.field === f} onClick={() => set("field", f)}>
+                      {lang === "vi" ? FIELD_VI[f] : f}
+                    </Chip>
                   ))}
                 </div>
               </Field>
-              <Field label="Current level">
+              <Field label={t("ob.level")}>
                 <div className="flex flex-wrap gap-1.5">
-                  {LEVELS.map((l) => (
-                    <Chip key={l} active={profile.level === l} onClick={() => set("level", l)}>{l}</Chip>
+                  {STUDY_LEVELS.map((l) => (
+                    <Chip key={l} active={profile.studyLevel === l} onClick={() => set("studyLevel", l)}>
+                      {lang === "vi" ? STUDY_LEVEL_VI[l] : l}
+                    </Chip>
                   ))}
                 </div>
               </Field>
-              <Field label="Goal">
+              <Field label={t("ob.year")}>
+                <div className="flex gap-1.5">
+                  {YEARS.map((y) => (
+                    <Chip key={y} active={profile.year === y} onClick={() => set("year", y)} className="flex-1 justify-center font-mono">
+                      {y}
+                    </Chip>
+                  ))}
+                </div>
+              </Field>
+              <Field label={t("ob.goal")}>
                 <div className="flex flex-wrap gap-1.5">
                   {GOALS.map((g) => (
-                    <Chip key={g} active={profile.goal === g} onClick={() => set("goal", g)}>{g}</Chip>
+                    <Chip key={g} active={profile.goal === g} onClick={() => set("goal", g)}>
+                      {lang === "vi" ? GOAL_VI[g] : g}
+                    </Chip>
                   ))}
                 </div>
               </Field>
-              <Field label="Preferred language">
+              <Field label={t("ob.language")}>
                 <div className="flex flex-wrap gap-1.5">
                   {LANGUAGES.map((l) => (
-                    <Chip key={l} active={profile.language === l} onClick={() => set("language", l)}>{l}</Chip>
+                    <Chip key={l} active={profile.language === l} onClick={() => set("language", l)}>
+                      {lang === "vi" ? LANGUAGE_VI[l] : l}
+                    </Chip>
                   ))}
                 </div>
               </Field>
-              <Field label="Country">
+              <Field label={t("ob.country")}>
                 <div className="flex flex-wrap gap-1.5">
                   {COUNTRIES.filter((c) => c.status === "live").map((c) => (
                     <Chip key={c.id} active={profile.country === c.name} onClick={() => set("country", c.name)}>
-                      {c.name}
+                      {lang === "vi" ? c.nameVi : c.name}
                     </Chip>
                   ))}
                 </div>
               </Field>
             </div>
 
-            <Button size="lg" className="mt-8" onClick={onClose}>See the new ranking</Button>
+            <Button size="lg" className="mt-8" onClick={onClose}>{t("action.done")}</Button>
           </motion.div>
         </>
       )}

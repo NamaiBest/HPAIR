@@ -5,6 +5,8 @@ import { PlatformMark } from "./ui";
 import type { Ranked } from "@/lib/match";
 import type { Weights } from "@/lib/score";
 import { asset, cn, formatDuration } from "@/lib/utils";
+import { useReason, useT } from "@/lib/i18n";
+import { FIELD_VI } from "@/data/profile";
 
 export function CourseCard({
   course, weights, rank, done, progress, onOpen, onExplain,
@@ -17,6 +19,8 @@ export function CourseCard({
   onOpen: () => void;
   onExplain: () => void;
 }) {
+  const { t, lang } = useT();
+  const reason = useReason();
   return (
     <motion.article
       layout
@@ -57,8 +61,8 @@ export function CourseCard({
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] opacity-60">
                 <PlatformMark id={course.platformId} size={13} showName />
-                <Dot /> <span>{course.field}</span>
-                <Dot /> <span>{course.level}</span>
+                <Dot /> <span>{lang === "vi" ? FIELD_VI[course.field] : course.field}</span>
+                <Dot /> <span>{t(`level.${course.level}` as never)}</span>
                 <Dot />
                 <span className="inline-flex items-center gap-1">
                   <Clock className="size-3" /> {formatDuration(course.minutes)}
@@ -79,7 +83,7 @@ export function CourseCard({
 
           {/* The personalised reason */}
           <p className="rounded-lg bg-flow/[0.07] px-3 py-2 text-[12.5px] leading-snug text-deep">
-            {course.reason}
+            {reason(course.reason)}
           </p>
 
           <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-0.5">
@@ -87,7 +91,7 @@ export function CourseCard({
               onClick={onExplain}
               className="inline-flex h-9 items-center gap-1.5 rounded-full pr-2.5 text-[12.5px] font-medium text-ink/60 transition-colors duration-150 hover:text-flow-dim"
             >
-              <Info className="size-3.5" /> Why this score?
+              <Info className="size-3.5" /> {t("cat.whyScore")}
             </button>
             <span className="text-[11.5px] opacity-40">{course.updated}</span>
             <span className="text-[11.5px] opacity-40">

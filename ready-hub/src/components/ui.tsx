@@ -66,22 +66,16 @@ export function PlatformMark({
   if (!p) return null;
   return (
     <span className={cn("inline-flex items-center gap-1.5", className)}>
-      <span
+      {/* Rendered as a real image, not a CSS mask: masks flatten a mark to one
+          colour, which turns multi-colour logos like Canva's into a solid blob. */}
+      <img
+        src={asset(p.logo)}
+        alt=""
         aria-hidden
-        style={{
-          width: size,
-          height: size,
-          backgroundColor: p.hex,
-          WebkitMaskImage: `url(${asset(p.logo)})`,
-          maskImage: `url(${asset(p.logo)})`,
-          WebkitMaskSize: "contain",
-          maskSize: "contain",
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          maskPosition: "center",
-          flexShrink: 0,
-        }}
+        width={size}
+        height={size}
+        style={{ width: size, height: size, flexShrink: 0, outline: "none" }}
+        className="object-contain"
       />
       {showName && <span className="truncate">{p.name}</span>}
       {!showName && !decorative && <span className="sr-only">{p.name}</span>}

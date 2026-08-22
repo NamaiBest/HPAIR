@@ -5,6 +5,7 @@ import {
   type FactorKey, type Weights,
 } from "@/lib/score";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 /**
  * The weight panel. Moving any slider recomputes every score in the catalogue
@@ -19,6 +20,7 @@ export function WeightPanel({
   onChange: (w: Weights) => void;
   compact?: boolean;
 }) {
+  const { t } = useT();
   const norm = normalise(weights);
   const activePreset = PRESETS.find((p) =>
     FACTOR_KEYS.every((k) => p.weights[k] === weights[k]),
@@ -29,19 +31,19 @@ export function WeightPanel({
       <div className="flex items-baseline justify-between gap-3">
         <div>
           <h3 className={cn("font-bold tracking-tight", compact ? "text-base" : "text-lg")}>
-            Scoring weights
+            {t("score.title")}
           </h3>
           <p className="mt-1 text-[12px] leading-snug opacity-55">
-            Decide what a good course means to you. The catalogue re-ranks as you move these.
+            {t("score.sub")}
           </p>
         </div>
         <button
           onClick={() => onChange(DEFAULT_WEIGHTS)}
-          title="Reset to equal weighting"
+          title={t("score.reset")}
           className="grid size-10 shrink-0 place-items-center rounded-full text-ink/45 transition-[background-color,color,scale] duration-150 hover:bg-black/5 hover:text-ink active:scale-[0.96]"
         >
           <RotateCcw className="size-4" />
-          <span className="sr-only">Reset weights</span>
+          <span className="sr-only">{t("score.reset")}</span>
         </button>
       </div>
 
@@ -59,7 +61,7 @@ export function WeightPanel({
                 : "bg-black/[0.04] text-ink/70 hover:bg-black/[0.08] hover:text-ink",
             )}
           >
-            {p.name}
+            {t(`preset.${p.id}` as never)}
           </button>
         ))}
       </div>
@@ -82,14 +84,17 @@ export function WeightPanel({
 function Slider({
   k, value, share, onChange,
 }: { k: FactorKey; value: number; share: number; onChange: (v: number) => void }) {
+  const { t } = useT();
   const meta = FACTOR_META[k];
+  const label = t(`score.${k}` as never);
+  const blurb = t(`score.${k}Blurb` as never);
   const pct = Math.round(share * 100);
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between gap-2">
         <label htmlFor={`w-${k}`} className="flex items-center gap-2 text-[13px] font-semibold">
           <span className="size-2.5 rounded-full" style={{ background: meta.color }} aria-hidden />
-          {meta.label}
+          {label}
         </label>
         <motion.span
           className="font-mono text-[12px] tabular-nums opacity-50"
@@ -109,7 +114,7 @@ function Slider({
         step={1}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        aria-label={`${meta.label} weight, ${pct} percent of the score`}
+        aria-label={`${label} — ${pct}%`}
         style={
           {
             "--thumb": meta.color,
@@ -117,7 +122,7 @@ function Slider({
           } as React.CSSProperties
         }
       />
-      <p className="text-[11px] leading-snug opacity-45">{meta.blurb}</p>
+      <p className="text-[11px] leading-snug opacity-45">{blurb}</p>
     </div>
   );
 }
