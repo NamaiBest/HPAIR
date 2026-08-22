@@ -280,23 +280,41 @@ export function Completion({
 
                   {passed && r.id !== "contributor" && openings(r.id).length > 0 && (
                     <ul className="mt-4 flex flex-col gap-2">
-                      {openings(r.id).map((o) => (
-                        <li key={o.id}>
-                          <a
-                            href={o.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-[13px] bg-black/[0.035] px-3.5 py-3 transition-colors duration-150 hover:bg-black/[0.06]"
-                          >
-                            <span className="text-[13px] font-semibold">{o.title}</span>
-                            <span className="text-[12px] opacity-55">{o.operator}</span>
-                            <span className="ml-auto flex items-center gap-2 text-[11.5px] opacity-45">
-                              {o.location} · {o.window}
-                              <ExternalLink className="size-3" />
-                            </span>
-                          </a>
+                      {[...openings(r.id)]
+                        .sort((a, b) => Number(!!a.illustrative) - Number(!!b.illustrative))
+                        .map((o) => (
+                          <li key={o.id}>
+                            <a
+                              href={o.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-[13px] px-3.5 py-3 transition-colors duration-150 ${
+                                o.illustrative
+                                  ? "bg-amber/[0.06] hover:bg-amber/[0.12]"
+                                  : "bg-black/[0.035] hover:bg-black/[0.06]"
+                              }`}
+                            >
+                              <span className="text-[13px] font-semibold">{o.title}</span>
+                              <span className="text-[12px] opacity-55">{o.operator}</span>
+                              {o.illustrative && (
+                                <span className="rounded-full bg-amber/20 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-amber uppercase">
+                                  Format preview
+                                </span>
+                              )}
+                              <span className="ml-auto flex items-center gap-2 text-[11.5px] opacity-45">
+                                {o.location} · {o.window}
+                                <ExternalLink className="size-3" />
+                              </span>
+                            </a>
+                          </li>
+                        ))}
+                      {openings(r.id).some((o) => o.illustrative) && (
+                        <li className="px-1 text-[11px] leading-snug opacity-40">
+                          Format preview: no country in this region publishes a public internship
+                          listing through its Ministry of Education yet. The link goes to the
+                          ministry's real official site, not a fabricated application page.
                         </li>
-                      ))}
+                      )}
                     </ul>
                   )}
 

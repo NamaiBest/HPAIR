@@ -18,6 +18,14 @@ export type Placement = {
   location: string;
   window: string;
   url: string;
+  /**
+   * Set when no country in this region runs a public, apply-here internship
+   * scheme through its Ministry of Education, checked directly rather than
+   * assumed. The link still goes somewhere real: the ministry's own official
+   * site, not a fabricated application page. The UI must show this
+   * distinction rather than presenting it as equivalent to a verified entry.
+   */
+  illustrative?: boolean;
 };
 
 export const PLACEMENTS: Placement[] = [
@@ -113,6 +121,123 @@ export const PLACEMENTS: Placement[] = [
     location: "Remote or Phnom Penh",
     window: "Rolling intake",
     url: "https://cambodia.ohchr.org/en/internship-program",
+  },
+
+  // ── Ministry of Education, by country ──────────────────────
+  // No country in the Mekong region publishes a standing, apply-here
+  // internship scheme through its Ministry of Education (checked directly
+  // for all five, August 2026). Each entry below links to that ministry's
+  // own real official site rather than a fabricated application page, and
+  // is marked `illustrative` so the UI can say so plainly.
+  {
+    id: "moe-vn-in",
+    kind: "inperson",
+    title: "Ministry of Education and Training, government placement track",
+    operator: "Ministry of Education and Training, Vietnam",
+    countries: ["Vietnam"],
+    location: "Hanoi, Vietnam",
+    window: "No public listing yet",
+    url: "https://en.moet.gov.vn/",
+    illustrative: true,
+  },
+  {
+    id: "moe-vn-re",
+    kind: "remote",
+    title: "Ministry of Education and Training, government placement track",
+    operator: "Ministry of Education and Training, Vietnam",
+    countries: ["Vietnam"],
+    location: "Remote, coordinated nationally",
+    window: "No public listing yet",
+    url: "https://en.moet.gov.vn/",
+    illustrative: true,
+  },
+  {
+    id: "moe-la-in",
+    kind: "inperson",
+    title: "Ministry of Education and Sports, government placement track",
+    operator: "Ministry of Education and Sports, Laos",
+    countries: ["Laos"],
+    location: "Vientiane, Laos",
+    window: "No public listing yet",
+    url: "https://www.moe.gov.la/",
+    illustrative: true,
+  },
+  {
+    id: "moe-la-re",
+    kind: "remote",
+    title: "Ministry of Education and Sports, government placement track",
+    operator: "Ministry of Education and Sports, Laos",
+    countries: ["Laos"],
+    location: "Remote, coordinated nationally",
+    window: "No public listing yet",
+    url: "https://www.moe.gov.la/",
+    illustrative: true,
+  },
+  {
+    id: "moe-kh-in",
+    kind: "inperson",
+    title: "Ministry of Education, Youth and Sport, government placement track",
+    operator: "Ministry of Education, Youth and Sport, Cambodia",
+    countries: ["Cambodia"],
+    location: "Phnom Penh, Cambodia",
+    window: "No public listing yet",
+    url: "http://www.moeys.gov.kh/en/",
+    illustrative: true,
+  },
+  {
+    id: "moe-kh-re",
+    kind: "remote",
+    title: "Ministry of Education, Youth and Sport, government placement track",
+    operator: "Ministry of Education, Youth and Sport, Cambodia",
+    countries: ["Cambodia"],
+    location: "Remote, coordinated nationally",
+    window: "No public listing yet",
+    url: "http://www.moeys.gov.kh/en/",
+    illustrative: true,
+  },
+  {
+    id: "moe-th-in",
+    kind: "inperson",
+    title: "Ministry of Education, government placement track",
+    operator: "Ministry of Education, Thailand",
+    countries: ["Thailand"],
+    location: "Bangkok, Thailand",
+    window: "No public listing yet",
+    url: "https://www.moe.go.th/en/",
+    illustrative: true,
+  },
+  {
+    id: "moe-th-re",
+    kind: "remote",
+    title: "Ministry of Education, government placement track",
+    operator: "Ministry of Education, Thailand",
+    countries: ["Thailand"],
+    location: "Remote, coordinated nationally",
+    window: "No public listing yet",
+    url: "https://www.moe.go.th/en/",
+    illustrative: true,
+  },
+  {
+    id: "moe-mm-in",
+    kind: "inperson",
+    title: "Ministry of Education, government placement track",
+    operator: "Ministry of Education, Myanmar",
+    countries: ["Myanmar"],
+    location: "Naypyidaw, Myanmar",
+    window: "No public listing yet",
+    url: "https://www.moe.gov.mm/en",
+    illustrative: true,
+  },
+  {
+    id: "moe-mm-re",
+    kind: "remote",
+    title: "Ministry of Education, government placement track",
+    operator: "Ministry of Education, Myanmar",
+    countries: ["Myanmar"],
+    location: "Remote, coordinated nationally",
+    window: "No public listing yet",
+    url: "https://www.moe.gov.mm/en",
+    illustrative: true,
   },
 ];
 
