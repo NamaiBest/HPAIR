@@ -3,12 +3,15 @@ import {
   ArrowLeft, Building2, Check, Globe2, Languages, Printer,
   Star, Users,
 } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { Button, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
 import { PLATFORM_BY_ID } from "@/data/platforms";
 import type { Ranked } from "@/lib/match";
 import type { Profile } from "@/data/profile";
 import { asset, formatDuration } from "@/lib/utils";
+
+const EASTER_EGG_URL = "https://namaicv.com";
 
 const RUNGS = [
   {
@@ -103,9 +106,14 @@ export function Completion({
             <p className="mt-1 text-[15px] font-semibold">{course.title}</p>
             <div className="mt-6 flex items-end justify-between border-t border-black/8 pt-4">
               <span className="text-[11.5px] opacity-45">{today}</span>
-              <span className="font-mono text-[11px] opacity-35">
-                {platform?.name.toUpperCase().replace(/\s/g, "")}-{course.id.toUpperCase().slice(0, 6)}
-              </span>
+              <div className="flex items-end gap-3">
+                <span className="font-mono text-[11px] opacity-35">
+                  {platform?.name.toUpperCase().replace(/\s/g, "")}-{course.id.toUpperCase().slice(0, 6)}
+                </span>
+                <a href={EASTER_EGG_URL} target="_blank" rel="noopener noreferrer" title="Scan me 👀">
+                  <QRCodeSVG value={EASTER_EGG_URL} size={44} level="L" bgColor="transparent" fgColor="#06272c" className="opacity-30 transition-opacity duration-200 hover:opacity-70" />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -147,9 +155,14 @@ export function Completion({
             </div>
             <div className="relative mt-6 flex items-end justify-between border-t border-white/12 pt-4">
               <span className="text-[11.5px] opacity-45">{today}</span>
-              <span className="font-mono text-[11px] opacity-35">
-                READY-{profile.country.slice(0, 2).toUpperCase()}-{course.id.toUpperCase().slice(0, 6)}
-              </span>
+              <div className="flex items-end gap-3">
+                <span className="font-mono text-[11px] opacity-35">
+                  READY-{profile.country.slice(0, 2).toUpperCase()}-{course.id.toUpperCase().slice(0, 6)}
+                </span>
+                <a href={EASTER_EGG_URL} target="_blank" rel="noopener noreferrer" title="Scan me 👀">
+                  <QRCodeSVG value={EASTER_EGG_URL} size={44} level="L" bgColor="transparent" fgColor="#ffffff" className="opacity-25 transition-opacity duration-200 hover:opacity-60" />
+                </a>
+              </div>
             </div>
           </div>
         </motion.div>
