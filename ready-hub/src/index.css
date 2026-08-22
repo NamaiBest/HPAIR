@@ -103,6 +103,24 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid var(--thumb, var(--color-flow));
 }
 
+/* Landing map: courses flowing from the platforms into the region.
+   pathLength="1" on the path normalises the dash units, so one set of
+   keyframes works for every arc regardless of its real length. */
+@keyframes rh-arc-draw {
+  0%   { stroke-dashoffset: 1; opacity: 0; }
+  12%  { opacity: 0.9; }
+  55%  { stroke-dashoffset: 0; opacity: 0.9; }
+  80%  { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.rh-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: rh-arc-draw 5s ease-in-out infinite;
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 

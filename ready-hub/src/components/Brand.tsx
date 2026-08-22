@@ -24,20 +24,20 @@ export function Brand({
       <img
         src={asset("/viethope/viethope-logo.png")}
         alt="VietHope"
-        className={cn("w-auto", lg ? "h-11" : "h-9")}
+        className={cn("w-auto", lg ? "h-9 sm:h-11" : "h-9")}
         style={{ outline: "none", filter: light ? "brightness(0) invert(1)" : undefined }}
       />
       <span
         className={cn(
           "w-px",
-          lg ? "h-8" : "hidden h-6 sm:block",
+          lg ? "h-6 sm:h-8" : "hidden h-6 sm:block",
           light ? "bg-white/25" : "bg-black/12",
         )}
       />
       <span
         className={cn(
           "font-display font-extrabold tracking-[-0.02em]",
-          lg ? "text-[22px] sm:text-[26px]" : "hidden text-[15px] font-bold sm:block",
+          lg ? "text-[17px] sm:text-[26px]" : "hidden text-[15px] font-bold sm:block",
           light && "text-white",
         )}
       >

@@ -5,6 +5,7 @@ import { LangToggle } from "@/components/LangToggle";
 import { Button, PlatformMark } from "@/components/ui";
 import { Footer } from "@/components/Footer";
 import { CountUp } from "@/components/CountUp";
+import { WorldMap } from "@/components/WorldMap";
 import { PLATFORMS } from "@/data/platforms";
 import { CASE_STATS } from "@/data/stats";
 import { CATALOGUE_SCALE, PLATFORM_SCALE } from "@/lib/reportStats";
@@ -29,7 +30,7 @@ export function Home({
           <Brand size="lg" />
           <div className="ml-auto flex items-center gap-3">
             <LangToggle />
-            <Button size="sm" onClick={onboarded ? onContinue : onGetStarted}>
+            <Button size="sm" className="hidden sm:inline-flex" onClick={onboarded ? onContinue : onGetStarted}>
               {onboarded ? t("action.goToCourses") : t("action.getStarted")}
             </Button>
           </div>
@@ -37,8 +38,27 @@ export function Home({
       </header>
 
       {/* ── Hero: copy left, the numbers on the right ─────────── */}
-      <section className="mx-auto max-w-[1120px] px-5 pt-16 pb-20 lg:px-8">
-        <div className="grid gap-14">
+      <section className="relative overflow-hidden">
+        {/* Dot map of the world, with courses flowing into the Mekong */}
+        <div className="pointer-events-none absolute inset-0 select-none">
+          <div className="absolute inset-0">
+            <WorldMap />
+          </div>
+          {/* Keep the headline readable over it */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(100deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.93) 34%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.12) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32"
+            style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0), #ffffff)" }}
+          />
+        </div>
+
+        <div className="relative mx-auto grid max-w-[1120px] gap-14 px-5 pt-16 pb-24 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", duration: 0.55, bounce: 0 }}
