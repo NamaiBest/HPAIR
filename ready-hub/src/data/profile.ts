@@ -192,3 +192,46 @@ export function derivedLevel(p: Pick<Profile, "studyLevel" | "year">): DerivedLe
   if (p.studyLevel === "Master's") return "Some experience";
   return p.year <= 2 ? "Beginner" : "Some experience";
 }
+
+/**
+ * Coerces anything previously saved in localStorage into a valid Profile.
+ *
+ * The shape has changed across versions: `language` became `languages`, `major`
+ * was added, and the list of fields grew. A returning visitor still holds the
+ * old shape, and reading `profile.languages.includes(...)` on it threw and left
+ * them looking at a blank page. Every load goes through here so that can never
+ * happen again, whatever is in storage.
+ */
+export function normaliseProfile(raw: unknown): Profile {
+  const p = (raw ?? {}) as Record<string, unknown>;
+  const d = DEFAULT_PROFILE;
+
+  const str = (v: unknown, fallback: string) =>
+    typeof v === "string" && v.trim() !== "" ? v : fallback;
+
+  const oneOf = <T extends string>(v: unknown, allowed: readonly T[], fallback: T): T =>
+    typeof v === "string" && (allowed as readonly string[]).includes(v) ? (v as T) : fallback;
+
+  // `language` (singular) is the pre-2026-08 shape.
+  const rawLangs = Array.isArray(p.languages)
+    ? p.languages
+    : typeof p.language === "string"
+      ? [p.language]
+      : [];
+  const languages = rawLangs.filter(
+    (l): l is Language => typeof l === "string" && (LANGUAGES as readonly string[]).includes(l),
+  );
+
+  const year = Number(p.year);
+
+  return {
+    country: str(p.country, d.country),
+    institution: str(p.institution, d.institution),
+    field: oneOf(p.field, FIELDS, d.field),
+    major: typeof p.major === "string" ? p.major : "",
+    studyLevel: oneOf(p.studyLevel, STUDY_LEVELS, d.studyLevel),
+    year: (YEARS as readonly number[]).includes(year) ? (year as Year) : d.year,
+    goal: oneOf(p.goal, GOALS, d.goal),
+    languages: languages.length > 0 ? languages : d.languages,
+  };
+}

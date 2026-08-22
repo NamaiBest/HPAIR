@@ -17,8 +17,8 @@ import { rank as rankCourses } from "@/lib/match";
 import { DEFAULT_WEIGHTS, type Weights } from "@/lib/score";
 import { useT } from "@/lib/i18n";
 import {
-  COUNTRIES, DEFAULT_PROFILE, FIELDS, FIELD_VI, GOALS, GOAL_VI, LANGUAGES, LANGUAGE_VI,
-  STUDY_LEVELS, STUDY_LEVEL_VI, YEARS, type Profile,
+  COUNTRIES, FIELDS, FIELD_VI, GOALS, GOAL_VI, LANGUAGES, LANGUAGE_VI,
+  STUDY_LEVELS, STUDY_LEVEL_VI, YEARS, normaliseProfile, type Profile,
 } from "@/data/profile";
 
 type EcoFeature = "fame" | "forum" | "collab" | "projects" | "resume";
@@ -39,7 +39,8 @@ export default function App() {
   const [view, setView] = useState<View>({ name: "home" });
   const [editing, setEditing] = useState(false);
 
-  const profile = (state.profile as Profile) ?? DEFAULT_PROFILE;
+  // Always coerce: storage may hold a profile saved by an older version.
+  const profile = useMemo(() => normaliseProfile(state.profile), [state.profile]);
   const weights = (state.weights as Weights) ?? DEFAULT_WEIGHTS;
 
   const ranked = useMemo(() => rankCourses(profile, weights), [profile, weights]);
