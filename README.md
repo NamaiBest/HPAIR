@@ -1,5 +1,7 @@
 # HPAIR
 
+https://namaibest.github.io/HPAIR/
+
 ## READY Hub
 
 A clickable demo of READY Hub, VietHope's curated gateway to digital-skills
