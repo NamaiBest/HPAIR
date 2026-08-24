@@ -1,18 +1,18 @@
-# 🏆 READY Hub · VietHope
+# READY Hub · VietHope
 
 ### 🥇 Impact Challenge Winners (2026) · Hanoi, Vietnam
 **The Harvard College Project for Asian and International Relations (HPAIR)**
 
 ---
 
-## 🚀 Live Interactive Demo
+## Live Interactive Demo
 
-# [👉 **LAUNCH READY HUB LIVE WEBSITE** 👈](https://namaibest.github.io/HPAIR/)
+# [**LAUNCH READY HUB LIVE WEBSITE**](https://namaibest.github.io/HPAIR/)
 > **Live URL:** [https://namaibest.github.io/HPAIR/](https://namaibest.github.io/HPAIR/)
 
 ---
 
-## 🌟 About READY Hub
+## About READY Hub
 
 **READY Hub** is VietHope's curated gateway to digital-skills courses for university students across the Mekong region. It features a transparent, deterministic **Multi-Criteria Decision Scoring Model (V-Score)** that indexes, rates, and personalizes thousands of online learning resources for students.
 
