@@ -1,13 +1,22 @@
-# HPAIR
+# 🏆 READY Hub · VietHope
 
-https://namaibest.github.io/HPAIR/
+### 🥇 Impact Challenge Winners (2026) · Hanoi, Vietnam
+**The Harvard College Project for Asian and International Relations (HPAIR)**
 
-## READY Hub
+---
 
-A clickable demo of READY Hub, VietHope's curated gateway to digital-skills
-courses for university students across the Mekong region. See
-[`ready-hub/README.md`](ready-hub/README.md) for the full demo walkthrough and
-scoring model.
+## 🚀 Live Interactive Demo
+
+# [👉 **LAUNCH READY HUB LIVE WEBSITE** 👈](https://namaibest.github.io/HPAIR/)
+> **Live URL:** [https://namaibest.github.io/HPAIR/](https://namaibest.github.io/HPAIR/)
+
+---
+
+## 🌟 About READY Hub
+
+**READY Hub** is VietHope's curated gateway to digital-skills courses for university students across the Mekong region. It features a transparent, deterministic **Multi-Criteria Decision Scoring Model (V-Score)** that indexes, rates, and personalizes thousands of online learning resources for students.
+
+See [`ready-hub/README.md`](ready-hub/README.md) for the complete demo walkthrough, technical architecture, and scoring model breakdown.
 
 ### Run it locally
 
@@ -20,12 +29,7 @@ npm run dev      # http://localhost:5173
 ### Deployment
 
 Pushing to `main` builds `ready-hub` and publishes it to GitHub Pages via
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). No manual step
-required after the initial one-time setup below.
-
-**One-time setup** (repo owner, once): in the repo's Settings → Pages, set
-**Source** to **GitHub Actions**. After that, every push to `main` deploys
-automatically.
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
 ---
 

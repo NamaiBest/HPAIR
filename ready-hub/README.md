@@ -1,6 +1,13 @@
-# READY Hub
+# 🏆 READY Hub · VietHope
 
-A clickable demo of READY Hub, VietHope's curated gateway to digital-skills
+### 🥇 Impact Challenge Winners (2026) · Hanoi, Vietnam
+**The Harvard College Project for Asian and International Relations (HPAIR)**
+
+---
+
+## 🚀 Live Demo: [https://namaibest.github.io/HPAIR/](https://namaibest.github.io/HPAIR/)
+
+A clickable, production-ready demo of READY Hub, VietHope's curated gateway to digital-skills
 courses for university students across the Mekong region.
 
 Frontend only. All data is seeded locally, progress is kept in `localStorage`,
